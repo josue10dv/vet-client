@@ -1,0 +1,661 @@
+@import "tailwindcss";
+
+:root {
+    /* Error */
+    --error-red010: #F9D2D2;
+    --error-red020: #F3A5A6;
+    --error-red060: #B4181B;
+    --error-red080: #5A0C0D;
+
+    /* Neutral Gray */
+    --neutral-gray010: #E8E5E3;
+    --neutral-gray020: #D0CBC7;
+    --neutral-gray030: #B9B1AC;
+    --neutral-gray040: #A3978F;
+    --neutral-gray050: #8B7E74;
+    --neutral-gray060: #6F655D;
+    --neutral-gray070: #534B46;
+    --neutral-gray080: #38322E;
+    --neutral-gray090: #1C1917;
+
+    /* Primary Blue */
+    --primary-blue010: #D9EEF2;
+    --primary-blue020: #B3DDE5;
+    --primary-blue070: #266673;
+    --primary-blue080: #19444D;
+
+    /* Secondary Rose */
+    --secondary-rose010: #FCCFE8;
+    --secondary-rose020: #FA9ED2;
+    --secondary-rose070: #910856;
+    --secondary-rose080: #610539;
+
+    /* Success Green */
+    --success-green010: #D2F9E7;
+    --success-green020: #A5F3CE;
+    --success-green080: #0C5A35;
+    --success-green090: #062D1B;
+
+    /* Tertiary Cream */
+    --tertiary-cream010: #FCF3CF;
+    --tertiary-cream020: #FAE69E;
+    --tertiary-cream080: #614D05;
+    --tertiary-cream090: #312703;
+
+    /* Semantic */
+    --semantic-error-container: var(--error-red020);
+    --semantic-error: var(--error-red060);
+    --semantic-on-error-container: var(--error-red080);
+    --semantic-on-error: var(--error-red010);
+
+    --semantic-primary-container: var(--primary-blue020);
+    --semantic-primary: var(--primary-blue070);
+    --semantic-on-primary-container: var(--primary-blue080);
+    --semantic-on-primary: var(--primary-blue010);
+
+    --semantic-secondary-container: var(--secondary-rose020);
+    --semantic-secondary: var(--secondary-rose070);
+    --semantic-on-secondary-container: var(--secondary-rose080);
+    --semantic-on-secondary: var(--secondary-rose010);
+
+    --semantic-success-container: var(--success-green010);
+    --semantic-success: var(--success-green080);
+    --semantic-on-success-container: var(--success-green090);
+    --semantic-on-success: var(--success-green010);
+
+    --semantic-tertiary-container: var(--tertiary-cream020);
+    --semantic-tertiary: var(--tertiary-cream080);
+    --semantic-on-tertiary-container: var(--tertiary-cream090);
+    --semantic-on-tertiary: var(--tertiary-cream010);
+}
+
+/* Configuración de fuente global */
+* {
+    font-family: 'Lexend', sans-serif;
+}
+
+body {
+    font-family: 'Lexend', sans-serif;
+}
+
+/* Scroll suave para navegación */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Ajuste para header fijo */
+section {
+    scroll-margin-top: 50px;
+}
+
+/* Personalizacion logo */
+.logo-icon {
+    fill: var(--semantic-on-primary);
+}
+
+/* Clases para iconos */
+.icon-primary {
+    fill: var(--semantic-on-primary);
+}
+
+/* ========================================= */
+/* ICONOS - ICON STYLES */
+/* ========================================= */
+
+/* Primary Icons */
+.icon-primary {
+    fill: var(--semantic-primary);
+}
+
+.icon-primary-light {
+    fill: var(--primary-blue010);
+}
+
+.icon-primary-medium {
+    fill: var(--primary-blue020);
+}
+
+.icon-primary-dark {
+    fill: var(--primary-blue080);
+}
+
+.icon-on-primary {
+    fill: var(--semantic-on-primary);
+}
+
+.icon-on-primary-container {
+    fill: var(--semantic-on-primary-container);
+}
+
+/* Secondary Icons */
+.icon-secondary {
+    fill: var(--semantic-secondary);
+}
+
+.icon-secondary-light {
+    fill: var(--secondary-rose010);
+}
+
+.icon-secondary-medium {
+    fill: var(--secondary-rose020);
+}
+
+.icon-secondary-dark {
+    fill: var(--secondary-rose080);
+}
+
+.icon-on-secondary {
+    fill: var(--semantic-on-secondary);
+}
+
+.icon-on-secondary-container {
+    fill: var(--semantic-on-secondary-container);
+}
+
+/* Tertiary Icons */
+.icon-tertiary {
+    fill: var(--semantic-tertiary);
+}
+
+.icon-tertiary-light {
+    fill: var(--tertiary-cream010);
+}
+
+.icon-tertiary-medium {
+    fill: var(--tertiary-cream020);
+}
+
+.icon-tertiary-dark {
+    fill: var(--tertiary-cream090);
+}
+
+.icon-on-tertiary {
+    fill: var(--semantic-on-tertiary);
+}
+
+.icon-on-tertiary-container {
+    fill: var(--semantic-on-tertiary-container);
+}
+
+/* Error Icons */
+.icon-error {
+    fill: var(--semantic-error);
+}
+
+.icon-error-light {
+    fill: var(--error-red010);
+}
+
+.icon-error-medium {
+    fill: var(--error-red020);
+}
+
+.icon-error-dark {
+    fill: var(--error-red080);
+}
+
+.icon-on-error {
+    fill: var(--semantic-on-error);
+}
+
+.icon-on-error-container {
+    fill: var(--semantic-on-error-container);
+}
+
+/* Success Icons */
+.icon-success {
+    fill: var(--semantic-success);
+}
+
+.icon-success-light {
+    fill: var(--success-green010);
+}
+
+.icon-success-medium {
+    fill: var(--success-green020);
+}
+
+.icon-success-dark {
+    fill: var(--success-green090);
+}
+
+.icon-on-success {
+    fill: var(--semantic-on-success);
+}
+
+.icon-on-success-container {
+    fill: var(--semantic-on-success-container);
+}
+
+/* Neutral Icons */
+.icon-neutral-light {
+    fill: var(--neutral-gray010);
+}
+
+.icon-neutral-medium {
+    fill: var(--neutral-gray050);
+}
+
+.icon-neutral-dark {
+    fill: var(--neutral-gray090);
+}
+
+/* ========================================= */
+/* BACKGROUNDS - BACKGROUND STYLES */
+/* ========================================= */
+
+/* Primary Backgrounds */
+.bg-white {
+    background-color: white;
+}
+
+.bg-primary {
+    background-color: var(--semantic-primary);
+    color: var(--semantic-on-primary);
+}
+
+.bg-primary-container {
+    background-color: var(--semantic-primary-container);
+    color: var(--semantic-on-primary-container);
+}
+
+.bg-primary-light {
+    background-color: var(--primary-blue010);
+    color: var(--primary-blue080);
+}
+
+.bg-primary-medium {
+    background-color: var(--primary-blue020);
+    color: var(--primary-blue080);
+}
+
+.bg-primary-dark {
+    background-color: var(--primary-blue080);
+    color: var(--primary-blue010);
+}
+
+/* Secondary Backgrounds */
+.bg-secondary {
+    background-color: var(--semantic-secondary);
+    color: var(--semantic-on-secondary);
+}
+
+.bg-secondary-container {
+    background-color: var(--semantic-secondary-container);
+    color: var(--semantic-on-secondary-container);
+}
+
+.bg-secondary-light {
+    background-color: var(--secondary-rose010);
+    color: var(--secondary-rose080);
+}
+
+.bg-secondary-medium {
+    background-color: var(--secondary-rose020);
+    color: var(--secondary-rose080);
+}
+
+.bg-secondary-dark {
+    background-color: var(--secondary-rose080);
+    color: var(--secondary-rose010);
+}
+
+/* Tertiary Backgrounds */
+.bg-tertiary {
+    background-color: var(--semantic-tertiary);
+    color: var(--semantic-on-tertiary);
+}
+
+.bg-tertiary-container {
+    background-color: var(--semantic-tertiary-container);
+    color: var(--semantic-on-tertiary-container);
+}
+
+.bg-tertiary-light {
+    background-color: var(--tertiary-cream010);
+    color: var(--tertiary-cream090);
+}
+
+.bg-tertiary-medium {
+    background-color: var(--tertiary-cream020);
+    color: var(--tertiary-cream090);
+}
+
+.bg-tertiary-dark {
+    background-color: var(--tertiary-cream090);
+    color: var(--tertiary-cream010);
+}
+
+/* Error Backgrounds */
+.bg-error {
+    background-color: var(--semantic-error);
+    color: var(--semantic-on-error);
+}
+
+.bg-error-container {
+    background-color: var(--semantic-error-container);
+    color: var(--semantic-on-error-container);
+}
+
+.bg-error-light {
+    background-color: var(--error-red010);
+    color: var(--error-red080);
+}
+
+.bg-error-medium {
+    background-color: var(--error-red020);
+    color: var(--error-red080);
+}
+
+.bg-error-dark {
+    background-color: var(--error-red080);
+    color: var(--error-red010);
+}
+
+/* Success Backgrounds */
+.bg-success {
+    background-color: var(--semantic-success);
+    color: var(--semantic-on-success);
+}
+
+.bg-success-container {
+    background-color: var(--semantic-success-container);
+    color: var(--semantic-on-success-container);
+}
+
+.bg-success-light {
+    background-color: var(--success-green010);
+    color: var(--success-green090);
+}
+
+.bg-success-medium {
+    background-color: var(--success-green020);
+    color: var(--success-green090);
+}
+
+.bg-success-dark {
+    background-color: var(--success-green090);
+    color: var(--success-green010);
+}
+
+/* Neutral Backgrounds */
+.bg-neutral-light {
+    background-color: var(--neutral-gray010);
+    color: var(--neutral-gray090);
+}
+
+.bg-neutral-medium {
+    background-color: var(--neutral-gray050);
+    color: var(--neutral-gray010);
+}
+
+.bg-neutral-dark {
+    background-color: var(--neutral-gray090);
+    color: var(--neutral-gray010);
+}
+
+/* ========================================= */
+/* TEXT COLORS - TEXT STYLES */
+/* ========================================= */
+
+/* Primary Text */
+.text-primary {
+    color: var(--semantic-primary);
+}
+
+.text-primary-light {
+    color: var(--primary-blue010);
+}
+
+.text-primary-medium {
+    color: var(--primary-blue020);
+}
+
+.text-primary-dark {
+    color: var(--primary-blue080);
+}
+
+.text-on-primary {
+    color: var(--semantic-on-primary);
+}
+
+.text-on-primary-container {
+    color: var(--semantic-on-primary-container);
+}
+
+/* Secondary Text */
+.text-secondary {
+    color: var(--semantic-secondary);
+}
+
+.text-secondary-light {
+    color: var(--secondary-rose010);
+}
+
+.text-secondary-medium {
+    color: var(--secondary-rose020);
+}
+
+.text-secondary-dark {
+    color: var(--secondary-rose080);
+}
+
+.text-on-secondary {
+    color: var(--semantic-on-secondary);
+}
+
+.text-on-secondary-container {
+    color: var(--semantic-on-secondary-container);
+}
+
+/* Tertiary Text */
+.text-tertiary {
+    color: var(--semantic-tertiary);
+}
+
+.text-tertiary-light {
+    color: var(--tertiary-cream010);
+}
+
+.text-tertiary-medium {
+    color: var(--tertiary-cream020);
+}
+
+.text-tertiary-dark {
+    color: var(--tertiary-cream090);
+}
+
+.text-on-tertiary {
+    color: var(--semantic-on-tertiary);
+}
+
+.text-on-tertiary-container {
+    color: var(--semantic-on-tertiary-container);
+}
+
+/* Error Text */
+.text-error {
+    color: var(--semantic-error);
+}
+
+.text-error-light {
+    color: var(--error-red010);
+}
+
+.text-error-medium {
+    color: var(--error-red020);
+}
+
+.text-error-dark {
+    color: var(--error-red080);
+}
+
+.text-on-error {
+    color: var(--semantic-on-error);
+}
+
+.text-on-error-container {
+    color: var(--semantic-on-error-container);
+}
+
+/* Success Text */
+.text-success {
+    color: var(--semantic-success);
+}
+
+.text-success-light {
+    color: var(--success-green010);
+}
+
+.text-success-medium {
+    color: var(--success-green020);
+}
+
+.text-success-dark {
+    color: var(--success-green090);
+}
+
+.text-on-success {
+    color: var(--semantic-on-success);
+}
+
+.text-on-success-container {
+    color: var(--semantic-on-success-container);
+}
+
+/* Efecto de subrayado para navegación */
+.nav-link {
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    opacity: 0.8;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: currentColor;
+    transition: width 0.3s ease;
+}
+
+.nav-link.active {
+    font-weight: 600;
+    opacity: 1;
+    color: var(--semantic-on-primary);
+}
+
+.nav-link.active::after {
+    width: 100%;
+    background-color: var(--semantic-on-primary);
+}
+
+/* Estilos para el menú móvil */
+.nav-link-mobile {
+    position: relative;
+    display: block;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    opacity: 0.8;
+    padding: 8px 0;
+}
+
+.nav-link-mobile::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: currentColor;
+    transition: width 0.3s ease;
+}
+
+.nav-link-mobile.active {
+    font-weight: 600;
+    opacity: 1;
+    color: var(--semantic-on-primary);
+}
+
+.nav-link-mobile.active::after {
+    width: 100%;
+    background-color: var(--semantic-on-primary);
+}
+
+/* Titulo vertical para servicios */
+.writing-vertical {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+}
+
+/* ========================================= */
+/* UTILIDADES ADICIONALES - UTILITY STYLES */
+/* ========================================= */
+
+/* Efectos y transiciones mejorados */
+.transition-smooth {
+    transition: all 0.3s ease;
+}
+
+.transition-fast {
+    transition: all 0.15s ease;
+}
+
+.transition-slow {
+    transition: all 0.5s ease;
+}
+
+/* ========================================= */
+/* ESTILOS DE INPUTS */
+/* ========================================= */
+.input {
+    background-color: var(--neutral-gray010);
+    border: 1.5px solid var(--neutral-gray030);
+    color: var(--neutral-gray090);
+    transition: all 0.2s ease;
+}
+
+.input::placeholder {
+    color: var(--neutral-gray050);
+    opacity: 1;
+}
+
+/* Focus para estados semánticos */
+.input:focus {
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+/* PRIMARY */
+.input-primary:focus {
+    border-color: var(--semantic-primary);
+    box-shadow: 0 0 0 3px rgba(38, 102, 115, 0.25);
+}
+
+/* SECONDARY */
+.input-secondary:focus {
+    border-color: var(--semantic-secondary);
+    box-shadow: 0 0 0 3px rgba(145, 8, 86, 0.25);
+}
+
+/* TERTIARY */
+.input-tertiary:focus {
+    border-color: var(--semantic-tertiary);
+    box-shadow: 0 0 0 3px rgba(97, 77, 5, 0.25);
+}
+
+/* SUCCESS */
+.input-success:focus {
+    border-color: var(--semantic-success);
+    box-shadow: 0 0 0 3px rgba(12, 90, 53, 0.25);
+}
+
+/* ERROR */
+.input-error:focus {
+    border-color: var(--semantic-error);
+    box-shadow: 0 0 0 3px rgba(180, 24, 27, 0.25);
+}
