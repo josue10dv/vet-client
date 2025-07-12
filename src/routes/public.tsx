@@ -1,7 +1,7 @@
 import type { RouteObject } from "react-router-dom";
 import GeneralLayout from "../layouts/general";
-import Home from "../pages/public/home";
-import { Login } from "../pages/public/login";
+import Home from "../home/pages/home";
+import { Login } from "../home/pages/login";
 
 export const publicRoutes: RouteObject[] = [
     {

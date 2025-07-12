@@ -1,22 +1,23 @@
 import { useState, type JSX } from "react";
-import Logo from "../../components/elements/logo";
+import Logo from "../../common/elements/logo";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Input from "../../components/elements/input";
-import Button from "../../components/elements/button";
+import Input from "../../common/elements/input";
+import Button from "../../common/elements/button";
+import { axiosInstance } from "../../common/services/requestHandler";
 
 /**
  * Esquema de validación para el formulario de inicio de sesión.
  * Utiliza Yup para definir las reglas de validación.
- * - El campo `email` es obligatorio y debe tener un formato de correo electrónico válido.
+ * - El campo `username` es obligatorio y debe tener la menos 3 caracteres.
  * - El campo `password` es obligatorio y debe tener al menos 6 caracteres.
  */
 const loginSchema = yup.object({
-    email: yup
+    username: yup
         .string()
-        .required("El correo es obligatorio")
-        .email("Formato de correo inválido"),
+        .required("El nombre de usuario es obligatorio")
+        .min(3, "El nombre de usuario debe tener al menos 3 caracteres"),
     password: yup
         .string()
         .required("La contraseña es obligatoria")
@@ -35,7 +36,9 @@ type LoginFormValues = yup.InferType<typeof loginSchema>;
  * @returns {JSX.Element} Componente de inicio de sesión.
  */
 export function Login(): JSX.Element {
+    // Estado para manejar el estado de carga del formulario.
     const [isLoading, setIsLoading] = useState(false);
+    // Hook de react-hook-form para manejar el formulario.
     const {
         register,
         handleSubmit,
@@ -44,10 +47,29 @@ export function Login(): JSX.Element {
         resolver: yupResolver(loginSchema),
     });
 
-    const onSubmit = (data: LoginFormValues) => {
-        console.log("Login exitoso:", data);
-        // Aquí podrías hacer un fetch hacia tu backend para autenticar
+    /**
+     * Función que maneja el envío del formulario de inicio de sesión.
+     * Realiza una petición POST al endpoint de inicio de sesión con los datos del formulario.
+     * @param data Datos del formulario de inicio de sesión.
+     */
+    const onSubmit = async (data: LoginFormValues) => {
+        try {
+            setIsLoading(true);
+            const response = await axiosInstance.post("/auth/login", data);
+            const { redirectUrl } = response.data.payload;
+            if (redirectUrl) {
+                window.location.href = redirectUrl;
+            } else {
+                console.error("No se recibió redirección después del inicio de sesión.");
+            }
+        } catch (error) {
+            console.error("Error al iniciar sesión:", error);
+        } finally {
+            setIsLoading(false);
+        }
+
     };
+
     return (
         <section className="bg-primary w-full min-h-screen flex items-center justify-center px-4">
             <div className="bg-white text-secondary-dark rounded-xl shadow-xl w-full max-w-md overflow-hidden">
@@ -59,14 +81,14 @@ export function Login(): JSX.Element {
                 {/* Formulario */}
                 <div className="px-6 py-6">
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
-                        {/* Campo email */}
+                        {/* Campo username */}
                         <Input
-                            label="Correo Electrónico"
-                            name="email"
-                            type="email"
-                            placeholder="Ingrese su correo electrónico"
+                            label="Nombre de usuario"
+                            name="username"
+                            type="text"
+                            placeholder="Ingrese su nombre de usuario"
                             register={register}
-                            error={errors.email}
+                            error={errors.username}
                             inputClassName="input input-secondary"
 
                         />

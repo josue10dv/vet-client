@@ -1,6 +1,6 @@
 import type { JSX, ReactNode } from "react";
-import PublicHeader from "../components/common/headerPublic";
-import Footer from "../components/common/footer";
+import PublicHeader from "../common/utilities/headerPublic";
+import Footer from "../common/utilities/footer";
 
 /**
  * Props para el componente GeneralLayout.

@@ -1,8 +1,8 @@
 import type { JSX } from "react";
-import ServiceSection from "../../components/home/serviceSection";
-import AboutUsSection from "../../components/home/aboutUsSection";
-import ContactUsSection from "../../components/home/contactUsSection";
-import HeroSection from "../../components/home/heroSection";
+import ServiceSection from "../components/serviceSection";
+import AboutUsSection from "../components/aboutUsSection";
+import ContactUsSection from "../components/contactUsSection";
+import HeroSection from "../components/heroSection";
 
 /**
  * Componente principal de la página Home
