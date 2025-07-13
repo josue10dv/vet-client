@@ -23,7 +23,7 @@ export default function AdminLayout({ children }: GeneralLayoutProps): JSX.Eleme
             <HeaderAdmin />
 
             {/* Content */}
-            <main className="flex-1 bg-gray-100 mt-17 p-6">
+            <main className="flex-1 bg-gray-100 mt-27 md:mt-17 p-6">
                 {children}
             </main>
 
