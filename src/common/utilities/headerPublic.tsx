@@ -79,7 +79,7 @@ export default function PublicHeader(): JSX.Element {
     };
 
     return (
-        <header className="bg-primary fixed top-0 left-0 right-0 z-50">
+        <header className="bg-primary fixed top-0 left-0 right-0 z-50 shadow-md">
             <div className="container mx-auto px-4 py-3">
                 <div className="flex items-center justify-between">
                     {/* Logo */}
