@@ -71,9 +71,9 @@ export default function Table({
     const paginatedRows = rows.slice((page - 1) * pageSize, page * pageSize);
 
     return (
-        <div className="w-full">
+        <div className="w-full h-[400px] overflow-auto">
             <table role="table" className="w-full text-left text-sm">
-                <thead className={color}>
+                <thead className={`${color} sticky top-0 z-10`}>
                     <tr>
                         {headers.map((header, i) => (
                             <th key={i} className="py-3 px-4 font-semibold">

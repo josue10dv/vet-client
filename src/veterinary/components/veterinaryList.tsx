@@ -43,6 +43,60 @@ export default function VeterinaryList(): JSX.Element {
                             view: () => console.log("Ver Veterinaria B"),
                         },
                     },
+                    {
+                        id: 2,
+                        cells: ["Veterinaria B", "Avenida 456", "(987) 654-3210"],
+                        actions: {
+                            edit: () => console.log("Editar Veterinaria B"),
+                            delete: () => console.log("Eliminar Veterinaria B"),
+                            view: () => console.log("Ver Veterinaria B"),
+                        },
+                    },
+                    {
+                        id: 2,
+                        cells: ["Veterinaria B", "Avenida 456", "(987) 654-3210"],
+                        actions: {
+                            edit: () => console.log("Editar Veterinaria B"),
+                            delete: () => console.log("Eliminar Veterinaria B"),
+                            view: () => console.log("Ver Veterinaria B"),
+                        },
+                    },
+                    {
+                        id: 2,
+                        cells: ["Veterinaria B", "Avenida 456", "(987) 654-3210"],
+                        actions: {
+                            edit: () => console.log("Editar Veterinaria B"),
+                            delete: () => console.log("Eliminar Veterinaria B"),
+                            view: () => console.log("Ver Veterinaria B"),
+                        },
+                    },
+                    {
+                        id: 2,
+                        cells: ["Veterinaria B", "Avenida 456", "(987) 654-3210"],
+                        actions: {
+                            edit: () => console.log("Editar Veterinaria B"),
+                            delete: () => console.log("Eliminar Veterinaria B"),
+                            view: () => console.log("Ver Veterinaria B"),
+                        },
+                    },
+                    {
+                        id: 2,
+                        cells: ["Veterinaria B", "Avenida 456", "(987) 654-3210"],
+                        actions: {
+                            edit: () => console.log("Editar Veterinaria B"),
+                            delete: () => console.log("Eliminar Veterinaria B"),
+                            view: () => console.log("Ver Veterinaria B"),
+                        },
+                    },
+                    {
+                        id: 2,
+                        cells: ["Veterinaria B", "Avenida 456", "(987) 654-3210"],
+                        actions: {
+                            edit: () => console.log("Editar Veterinaria B"),
+                            delete: () => console.log("Eliminar Veterinaria B"),
+                            view: () => console.log("Ver Veterinaria B"),
+                        },
+                    }
                 ]}
                 hasActions={true}
                 page={1}
