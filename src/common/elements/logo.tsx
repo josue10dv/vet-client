@@ -1,36 +1,13 @@
 import ForPetsIcon from "../../assets/icons/pet.svg?react";
 import type { JSX } from "react";
+import type { IconColor, IconTextColor } from "../types/icons";
 
-type LogoIconColor = 
-    | 'icon-primary' | 'icon-primary-light' | 'icon-primary-medium' | 'icon-primary-dark'
-    | 'icon-on-primary' | 'icon-on-primary-container'
-    | 'icon-secondary' | 'icon-secondary-light' | 'icon-secondary-medium' | 'icon-secondary-dark'
-    | 'icon-on-secondary' | 'icon-on-secondary-container'
-    | 'icon-tertiary' | 'icon-tertiary-light' | 'icon-tertiary-medium' | 'icon-tertiary-dark'
-    | 'icon-on-tertiary' | 'icon-on-tertiary-container'
-    | 'icon-error' | 'icon-error-light' | 'icon-error-medium' | 'icon-error-dark'
-    | 'icon-on-error' | 'icon-on-error-container'
-    | 'icon-success' | 'icon-success-light' | 'icon-success-medium' | 'icon-success-dark'
-    | 'icon-on-success' | 'icon-on-success-container'
-    | 'icon-neutral-light' | 'icon-neutral-medium' | 'icon-neutral-dark';
-
-type LogoTextColor = 
-    | 'text-primary' | 'text-primary-light' | 'text-primary-medium' | 'text-primary-dark'
-    | 'text-on-primary' | 'text-on-primary-container'
-    | 'text-secondary' | 'text-secondary-light' | 'text-secondary-medium' | 'text-secondary-dark'
-    | 'text-on-secondary' | 'text-on-secondary-container'
-    | 'text-tertiary' | 'text-tertiary-light' | 'text-tertiary-medium' | 'text-tertiary-dark'
-    | 'text-on-tertiary' | 'text-on-tertiary-container'
-    | 'text-error' | 'text-error-light' | 'text-error-medium' | 'text-error-dark'
-    | 'text-on-error' | 'text-on-error-container'
-    | 'text-success' | 'text-success-light' | 'text-success-medium' | 'text-success-dark'
-    | 'text-on-success' | 'text-on-success-container'
-    | 'text-neutral-light' | 'text-neutral-medium' | 'text-neutral-dark';
 
 interface LogoProps {
-    fill?: LogoIconColor; // Clase CSS para el color del icono
-    textColor?: LogoTextColor; // Clase CSS para el color del texto
+    fill?: IconColor; // Clase CSS para el color del icono
+    textColor?: IconTextColor; // Clase CSS para el color del texto
     size?: string; // Clase CSS para el tamaño del icono
+    href?: string; // URL opcional para redireccionar al hacer clic
 }
 
 /**
@@ -46,12 +23,13 @@ export default function Logo(
     {
         fill = 'icon-primary',
         textColor,
-        size = 'w-8 h-8'
+        size = 'w-8 h-8',
+        href = '',
     }: LogoProps
 ): JSX.Element {
     // Función para convertir la clase de icono a clase de texto equivalente
-    const getTextColorFromIconColor = (iconColor: LogoIconColor): LogoTextColor => {
-        return iconColor.replace('icon-', 'text-') as LogoTextColor;
+    const getTextColorFromIconColor = (iconColor: IconColor): IconTextColor => {
+        return iconColor.replace('icon-', 'text-') as IconTextColor;
     };
 
     // Usar textColor si se proporciona, sino derivar del color del icono
@@ -60,7 +38,13 @@ export default function Logo(
     return (
         <div className="flex items-center justify-center gap-4">
             {/* Icono y 4Pets */}
-            <div className="flex flex-col items-center leading-none">
+            <div className="flex flex-col items-center leading-none cursor-pointer" {
+                ...(
+                    href != ''
+                        ? { onClick: () => window.location.href = href }
+                        : {}
+                )
+            }>
                 <ForPetsIcon className={`${size} ${fill} transition-smooth`} />
                 <span className={`text-sm font-semibold ${finalTextColor} transition-smooth`}>
                     4Pets

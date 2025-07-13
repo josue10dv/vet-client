@@ -1,15 +1,15 @@
 import type { RouteObject } from "react-router-dom";
-import GeneralLayout from "../layouts/general";
-import Home from "../home/pages/home";
-import { Login } from "../home/pages/login";
+import GeneralLayout from "../layouts/generalLayout";
+import HomePage from "../home/pages/home";
+import LoginPage from "../home/pages/login";
 
 export const publicRoutes: RouteObject[] = [
     {
         path: "/",
-        element: <GeneralLayout children={<Home />} />,
+        element: <GeneralLayout children={<HomePage />} />,
     },
     {
         path: "/login",
-        element: <Login />,
+        element: <LoginPage />,
     },
 ];

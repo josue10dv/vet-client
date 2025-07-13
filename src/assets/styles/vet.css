@@ -93,11 +93,6 @@ section {
     fill: var(--semantic-on-primary);
 }
 
-/* Clases para iconos */
-.icon-primary {
-    fill: var(--semantic-on-primary);
-}
-
 /* ========================================= */
 /* ICONOS - ICON STYLES */
 /* ========================================= */
@@ -523,6 +518,17 @@ section {
     color: var(--semantic-on-success-container);
 }
 
+/* Neutral Text */
+.text-neutral-light {
+    color: var(--neutral-gray010);
+}
+.text-neutral-medium {
+    color: var(--neutral-gray050);
+}
+.text-neutral-dark {
+    color: var(--neutral-gray090);
+}
+
 /* Efecto de subrayado para navegación */
 .nav-link {
     position: relative;
@@ -546,12 +552,12 @@ section {
 .nav-link.active {
     font-weight: 600;
     opacity: 1;
-    color: var(--semantic-on-primary);
+    color: currentColor;
 }
 
 .nav-link.active::after {
     width: 100%;
-    background-color: var(--semantic-on-primary);
+    background-color: currentColor;
 }
 
 /* Estilos para el menú móvil */
@@ -578,12 +584,12 @@ section {
 .nav-link-mobile.active {
     font-weight: 600;
     opacity: 1;
-    color: var(--semantic-on-primary);
+    color: currentColor;
 }
 
 .nav-link-mobile.active::after {
     width: 100%;
-    background-color: var(--semantic-on-primary);
+    background-color: currentColor;
 }
 
 /* Titulo vertical para servicios */
@@ -658,4 +664,13 @@ section {
 .input-error:focus {
     border-color: var(--semantic-error);
     box-shadow: 0 0 0 3px rgba(180, 24, 27, 0.25);
+}
+
+/* ========================================= */
+/* HOVER STATES - EFECTOS HOVER */
+/* ========================================= */
+
+/* Primary Hover States */
+.hover\:bg-opacity-light:hover {
+    opacity: 0.75;
 }

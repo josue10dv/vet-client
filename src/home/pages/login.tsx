@@ -35,7 +35,7 @@ type LoginFormValues = yup.InferType<typeof loginSchema>;
  * Incluye validación de campos utilizando Yup.
  * @returns {JSX.Element} Componente de inicio de sesión.
  */
-export function Login(): JSX.Element {
+export default function LoginPage(): JSX.Element {
     // Estado para manejar el estado de carga del formulario.
     const [isLoading, setIsLoading] = useState(false);
     // Hook de react-hook-form para manejar el formulario.

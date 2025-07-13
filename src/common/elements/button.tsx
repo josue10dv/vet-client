@@ -1,4 +1,5 @@
 import type { ButtonHTMLAttributes, JSX } from "react";
+import { ColorMap, type ColorVariant } from "../types/variants";
 
 /**
  * Propiedades del componente FormButton.
@@ -11,7 +12,7 @@ import type { ButtonHTMLAttributes, JSX } from "react";
 interface FormButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     text: string;
     type?: "button" | "submit" | "reset";
-    variant?: "primary" | "secondary" | "success" | "error" | "tertiary";
+    variant?: ColorVariant;
     fullWidth?: boolean;
     className?: string;
     isLoading?: boolean;
@@ -37,20 +38,12 @@ export default function Button({
     const baseClass =
         "rounded-md font-semibold py-3 px-4 text-white transition duration-200 ease-in-out focus:outline-none";
 
-    const variantStyles: Record<string, string> = {
-        primary: "bg-[var(--semantic-primary)] hover:bg-[var(--primary-blue080)]",
-        secondary: "bg-[var(--semantic-secondary)] hover:bg-[var(--secondary-rose080)]",
-        success: "bg-[var(--semantic-success)] hover:bg-[var(--success-green090)]",
-        error: "bg-[var(--semantic-error)] hover:bg-[var(--error-red080)]",
-        tertiary: "bg-[var(--semantic-tertiary)] hover:bg-[var(--tertiary-cream090)] text-neutral-gray090",
-    };
-
     const widthClass = fullWidth ? "w-full" : "w-auto";
 
     return (
         <button
             type={type}
-            className={`${baseClass} ${variantStyles[variant]} ${widthClass} ${className} ${(isLoading || disabled) ? "opacity-50 cursor-not-allowed" : ""
+            className={`${baseClass} ${ColorMap[variant]} ${widthClass} ${className} ${(isLoading || disabled) ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
                 }`}
             disabled={isLoading || disabled}
             {...rest}

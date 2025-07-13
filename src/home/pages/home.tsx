@@ -9,7 +9,7 @@ import HeroSection from "../components/heroSection";
  * Incluye las secciones: Nosotros, Servicios y Contactos
  * @returns JSX.Element - Componente de la página Home que renderiza las secciones principales del software 4Pets.
  */
-export default function Home(): JSX.Element {
+export default function HomePage(): JSX.Element {
     return (
         <div className="min-h-screen">
             {/* Sección Hero */}
