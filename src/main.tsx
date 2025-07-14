@@ -1,8 +1,12 @@
 import { StrictMode, type JSX } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, useRoutes } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import { appRoutes } from './routes/app';
 import './assets/styles/vet.css';
+import 'react-toastify/dist/ReactToastify.css';
+import { LoadingProvider } from './common/providers/loadingContext';
+import LoadingScreen from './common/utilities/loadingScreen';
 
 /**
  * Componente principal de la aplicación 4Pets.
@@ -11,7 +15,13 @@ import './assets/styles/vet.css';
  */
 function App(): JSX.Element {
   const routes = useRoutes(appRoutes);
-  return <>{routes}</>;
+  return (
+    <LoadingProvider>
+      <LoadingScreen />
+      {routes}
+      <ToastContainer />
+    </LoadingProvider>
+  );
 }
 
 /**

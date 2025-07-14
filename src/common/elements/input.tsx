@@ -11,7 +11,7 @@ import type { FieldError } from "react-hook-form";
  * - `labelClassName`: Clase CSS para la etiqueta del campo.
  * - `inputClassName`: Clase CSS para el campo de entrada.
  */
-interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     label: string;
     name: string;
     register: any;
@@ -22,10 +22,10 @@ interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 /**
- * Componente FormInput.
+ * Componente Input.
  * Este componente renderiza un campo de entrada con una etiqueta y maneja errores de validación.
  * @returns {JSX.Element} Componente de entrada de formulario.
- * @param {FormInputProps} props - Propiedades del componente.
+ * @param {InputProps} props - Propiedades del componente.
  */
 export default function Input({
     label,
@@ -36,7 +36,7 @@ export default function Input({
     labelClassName = "block text-sm font-medium text-current mb-2",
     inputClassName = "",
     ...rest
-}: FormInputProps): JSX.Element {
+}: InputProps): JSX.Element {
     const inputBaseStyle = "w-full p-3 rounded-md outline-none input";
     return (
         <div className={containerClassName}>

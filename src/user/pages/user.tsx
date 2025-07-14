@@ -1,6 +1,7 @@
 
 import type { JSX } from "react";
 import UserList from "../components/userList";
+import UserForm from "../components/userForm";
 
 export default function UserPage(): JSX.Element {
     return (
@@ -15,10 +16,25 @@ export default function UserPage(): JSX.Element {
                     type: "admin",
                     username: "johndoe",
                     createdAt: '2023-10-01'
-                }
-            ]} />
-            {/* Lista de Usuarios */}
-            <UserList list={[
+                },
+                {
+                    id: 'a',
+                    name: "John Doe",
+                    email: "ejemplo@ejemplo.com",
+                    isActive: true,
+                    type: "admin",
+                    username: "johndoe",
+                    createdAt: '2023-10-01'
+                },
+                {
+                    id: 'a',
+                    name: "John Doe",
+                    email: "ejemplo@ejemplo.com",
+                    isActive: true,
+                    type: "admin",
+                    username: "johndoe",
+                    createdAt: '2023-10-01'
+                },
                 {
                     id: 'a',
                     name: "John Doe",
@@ -28,7 +44,10 @@ export default function UserPage(): JSX.Element {
                     username: "johndoe",
                     createdAt: '2023-10-01'
                 }
+
             ]} />
+            {/* Lista de Usuarios */}
+            <UserForm />
         </section>
     );
 }

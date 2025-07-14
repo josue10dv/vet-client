@@ -55,12 +55,18 @@ export default function DropdownButton({
     const [menuStyles, setMenuStyles] = useState<{ top: number; left: number } | null>(null);
     // Efecto para actualizar las coordenadas del menú cuando se abre
     useEffect(() => {
-        if (isOpen && buttonRef.current) {
-            const rect = buttonRef.current.getBoundingClientRect();
-            setMenuStyles({
-                top: rect.bottom + window.scrollY,
-                left: rect.left + window.scrollX,
-            });
+        if (isOpen) {
+            if (buttonRef.current) {
+                const rect = buttonRef.current.getBoundingClientRect();
+                setMenuStyles({
+                    top: rect.bottom + window.scrollY,
+                    left: rect.left + window.scrollX,
+                });
+            }
+
+            const handleScroll = () => setIsOpen(false);
+            window.addEventListener("scroll", handleScroll, true); // `true` para capturar en fase de captura
+            return () => window.removeEventListener("scroll", handleScroll, true);
         }
     }, [isOpen]);
     /*************************

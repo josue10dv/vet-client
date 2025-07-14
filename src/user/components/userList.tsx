@@ -1,6 +1,5 @@
 import type { JSX } from "react";
 import type { UserProps } from "../../common/interfaces/user";
-import Button from "../../common/elements/button";
 import UserCard from "./userCard";
 
 /**
@@ -21,27 +20,21 @@ export default function UserList({
     list
 }: UserListProps): JSX.Element {
     return (
-        <div className="flex-1 bg-neutral-light text-primary-dark rounded-xl shadow-md p-6">
+        <div className="flex-1 bg-neutral-light text-primary-dark rounded-xl shadow-md p-6 max-h-[570px] overflow-y-auto">
             <div className="flex justify-between items-center mb-4">
                 <h2 className="text-2xl font-bold">Lista de Usuarios</h2>
-                <Button
-                    text="Nuevo"
-                    variant="success"
-                    fullWidth={false}
-                    type="button"
-                />
             </div>
 
-            {/* Listado de usuarios */}
-            {
-                list.map((user: UserProps) => (
-                    <UserCard
-                        key={user.id}
-                        variant={user.isActive ? 'success' : 'error'}
-                        {...user}
-                    />
-                ))
-            }
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {list.map((user: UserProps) => (
+                    <div key={user.id}>
+                        <UserCard
+                            variant={user.isActive ? "success" : "error"}
+                            {...user}
+                        />
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }

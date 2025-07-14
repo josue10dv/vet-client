@@ -6,7 +6,6 @@ import type { JSX } from "react";
  * @returns {JSX.Element} Componente de sección de servicios que muestra los servicios ofrecidos por el software 4Pets.
  */
 export default function ServiceSection(): JSX.Element {
-    console.log("Current path is:", import.meta.url);
     const services = [
         {
             titulo: "PACIENTES",

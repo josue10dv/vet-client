@@ -8,6 +8,7 @@ interface LogoProps {
     textColor?: IconTextColor; // Clase CSS para el color del texto
     size?: string; // Clase CSS para el tamaño del icono
     href?: string; // URL opcional para redireccionar al hacer clic
+    className?: string; // Clases CSS opcionales para personalizar el estilo del componente
 }
 
 /**
@@ -25,6 +26,7 @@ export default function Logo(
         textColor,
         size = 'w-8 h-8',
         href = '',
+        className = ''
     }: LogoProps
 ): JSX.Element {
     // Función para convertir la clase de icono a clase de texto equivalente
@@ -45,7 +47,7 @@ export default function Logo(
                         : {}
                 )
             }>
-                <ForPetsIcon className={`${size} ${fill} transition-smooth`} />
+                <ForPetsIcon className={`${size} ${fill} ${className} transition-smooth`} />
                 <span className={`text-sm font-semibold ${finalTextColor} transition-smooth`}>
                     4Pets
                 </span>

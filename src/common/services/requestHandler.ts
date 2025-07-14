@@ -1,5 +1,6 @@
 import axios, { AxiosError, type AxiosInstance } from "axios";
 import { EnvHandler } from "./envHandler";
+import { triggerToast } from "./toastHandler";
 
 /**
  * Gestor de peticiones HTTP usando Axios.
@@ -56,8 +57,11 @@ export class RequestHandler {
                             console.warn("Método no permitido.");
                             break;
                         default:
-                            if (data?.error || data?.message) {
-                                console.error("Error del backend:", data.message || data.error);
+                            if (!data?.success) {
+                                const msg = Array.isArray(data?.message)
+                                    ? data.message.join(", ")
+                                    : data?.message || "Error desconocido";
+                                triggerToast('Error: ' + msg, 'error');
                             }
                     }
                 } else if (error.request) {

@@ -1,5 +1,5 @@
 import type { JSX } from "react";
-import Bagde from "../../common/elements/bagde";
+import { BagdeStatus } from "../../common/elements/bagde";
 import type { ColorVariant } from "../../common/types/variants";
 import type { UserProps } from "../../common/interfaces/user";
 import DropdownButton from "../../common/elements/dropdown";
@@ -42,7 +42,12 @@ export default function UserCard({ variant = "primary", ...user }: UserCardProps
                 relative text-primary-light"
         >
             {/* Estado */}
-            <Bagde variant={variant} />
+            <div className="top-7 right-5 absolute">
+                <BagdeStatus
+                    variant={variant}
+                    text={user.isActive ? "Activo" : "Inactivo"}
+                />
+            </div>
 
             {/* Avatar */}
             <div className="flex justify-center mb-4">

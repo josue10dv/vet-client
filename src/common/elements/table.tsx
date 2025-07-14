@@ -64,14 +64,14 @@ export default function Table({
     pageSize = 10,
     color = "bg-primary-dark",
     totalItems = rows.length,
-    iconFill= "icon-primary-light",
+    iconFill = "icon-primary-light",
     onPageChange,
 }: TableProps): JSX.Element {
     const totalPages = Math.ceil(totalItems / pageSize);
     const paginatedRows = rows.slice((page - 1) * pageSize, page * pageSize);
 
     return (
-        <div className="w-full h-[400px] overflow-auto">
+        <div className="w-full h-full overflow-auto">
             <table role="table" className="w-full text-left text-sm">
                 <thead className={`${color} sticky top-0 z-10`}>
                     <tr>
@@ -86,7 +86,7 @@ export default function Table({
                     </tr>
                 </thead>
                 <tbody>
-                    {paginatedRows.map((row) => (
+                    {paginatedRows.length > 0 ? (paginatedRows.map((row) => (
                         <tr key={row.id} className="border-b border-dashed hover:bg-gray-100 transition">
                             {row.cells.map((cell, i) => (
                                 <td key={i} className="py-3 px-4">
@@ -115,7 +115,13 @@ export default function Table({
                                 </td>
                             )}
                         </tr>
-                    ))}
+                    ))) : (
+                        <tr className="border-b border-dashed cursor-default">
+                            <td colSpan={hasActions ? headers.length + 1 : headers.length} className="py-3 px-4 text-center text-gray-500">
+                                No hay datos disponibles
+                            </td>
+                        </tr>
+                    )}
                 </tbody>
             </table>
 
