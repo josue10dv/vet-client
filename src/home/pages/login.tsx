@@ -6,6 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Input from "../../common/elements/input";
 import Button from "../../common/elements/button";
 import { axiosInstance } from "../../common/services/requestHandler";
+import ParticleBackground from "../../common/elements/particleBackground";
 
 /**
  * Esquema de validación para el formulario de inicio de sesión.
@@ -71,17 +72,20 @@ export default function LoginPage(): JSX.Element {
     };
 
     return (
-        <section className="bg-primary w-full min-h-screen flex items-center justify-center px-4">
-            <div className="bg-white text-secondary-dark rounded-xl shadow-xl w-full max-w-md overflow-hidden">
-                <div className="bg-secondary flex flex-col items-center px-6 py-5">
+        <section className="relative bg-primary w-full min-h-screen flex items-center justify-center px-4 overflow-hidden">
+            <ParticleBackground />
+
+            <div className="relative z-10 w-full max-w-md bg-white text-secondary-dark rounded-2xl shadow-2xl transition-all duration-300">
+                {/* Encabezado */}
+                <div className="bg-secondary text-center px-8 py-6 rounded-t-2xl">
                     <Logo fill="icon-secondary-light" size="w-16 h-16" />
-                    <h2 className="text-2xl font-bold mt-2">Iniciar Sesión</h2>
+                    <h1 className="text-3xl font-extrabold text-white mt-3">Iniciar Sesión</h1>
+                    <p className="text-sm text-white/80">Bienvenido de nuevo a 4Pets</p>
                 </div>
 
                 {/* Formulario */}
-                <div className="px-6 py-6">
+                <div className="px-8 py-7">
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
-                        {/* Campo username */}
                         <Input
                             label="Nombre de usuario"
                             name="username"
@@ -90,10 +94,8 @@ export default function LoginPage(): JSX.Element {
                             register={register}
                             error={errors.username}
                             inputClassName="input input-secondary"
-
                         />
 
-                        {/* Campo contraseña */}
                         <Input
                             label="Contraseña"
                             name="password"
@@ -104,21 +106,26 @@ export default function LoginPage(): JSX.Element {
                             inputClassName="input input-secondary"
                         />
 
-                        {/* Botón de inicio de sesión */}
                         <Button
                             text="Iniciar Sesión"
                             variant="secondary"
                             isLoading={isLoading}
                             type="submit"
+                            className="w-full"
                         />
 
-                        {/* Enlace de recuperación */}
-                        <div className="mt-4 text-right">
+                        <div className="flex flex-row justify-between items-center text-sm mt-4">
                             <a
                                 href="/forgot-password"
-                                className="text-sm text-secondary-dark hover:underline"
+                                className="text-secondary-dark hover:text-secondary font-medium underline underline-offset-2"
                             >
                                 ¿Olvidaste tu contraseña?
+                            </a>
+                            <a
+                                href="/"
+                                className="inline-block text-sm text-secondary-dark hover:text-secondary font-medium transition-colors underline underline-offset-2"
+                            >
+                                ← Volver al inicio
                             </a>
                         </div>
                     </form>

@@ -62,8 +62,9 @@ export default function Select({
                 {...register(name)}
                 {...rest}
                 className={`${baseStyle} ${selectClassName}`}
+                defaultValue={""}
             >
-                <option value="" selected>Seleccione una opción</option>
+                <option value="">Seleccione una opción</option>
                 {options.map(({ label, value }) => (
                     <option key={value} value={value}>
                         {label}

@@ -99,21 +99,30 @@ export default function VeterinaryList({
 
 
     return (
-        <div className="flex-1 bg-neutral-light text-primary-dark p-6 rounded-xl shadow-md">
-            <div className="flex justify-between items-center mb-4">
-                <h2 className="text-2xl font-bold">Lista de Veterinarias</h2>
+        <div className="flex-1 bg-white rounded-xl shadow-sm border border-[var(--neutral-gray020)]">
+            <div className="p-6 border-b border-gray-200">
+                <div className="flex justify-between items-center">
+                    <div>
+                        <h2 className="text-xl font-semibold text-primary-dark">Lista de Veterinarias</h2>
+                        <p className="text-sm text-primary mt-1">
+                            Gestiona las veterinarias del sistema ({list.length} veterinarias)
+                        </p>
+                    </div>
+                </div>
             </div>
 
-            <Table
-                color="bg-primary-dark"
-                headers={["Nombre", "Ubicación", "Teléfono"]}
-                rows={rows}
-                hasActions={true}
-                page={1}
-                pageSize={10}
-                totalItems={2}
-                iconFill="icon-secondary-light"
-            />
+            <div className="p-6">
+                <Table
+                    color="bg-primary-dark"
+                    headers={["Nombre", "Ubicación", "Teléfono"]}
+                    rows={rows}
+                    hasActions={true}
+                    page={1}
+                    pageSize={10}
+                    totalItems={2}
+                    iconFill="icon-secondary-light"
+                />
+            </div>
         </div>
     );
 }

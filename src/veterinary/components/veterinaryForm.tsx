@@ -57,7 +57,7 @@ type VeterinaryFormValues = yup.InferType<typeof veterinarySchema>;
 
 // Propiedades del componente VeterinaryForm.
 interface VeterinaryFormProps {
-    submited?: (data: VeterinaryFormValues) => void;
+    submited?: () => void;
     initialValues?: Partial<VeterinaryFormValues> | null;
     editingId?: string | null; // ID de la veterinaria que se está editando
 }
@@ -129,7 +129,7 @@ export default function VeterinaryForm({
             triggerToast(message, success ? 'success' : 'error');
 
             if (success) {
-                if (submited) submited(data);
+                if (submited) submited();
                 reset();
             }
         } catch (error) {
@@ -138,13 +138,17 @@ export default function VeterinaryForm({
     };
 
     return (
-        <div className="flex-1 bg-neutral-light text-primary-dark p-6 rounded-xl shadow-md">
-            <div className="mb-4">
-                <h2 className="text-2xl font-bold">
-                    {editingId ? 'Editar' : 'Crear'} Veterinaria
+        <div className="flex-1 bg-white text-primary-dark p-6 rounded-xl shadow-sm border border-[var(--neutral-gray020)]">
+            <div className="mb-6">
+                <h2 className="text-2xl font-bold text-primary-dark">
+                    {editingId ? "Editar Veterinaria" : "Crear Nueva Veterinaria"}
                 </h2>
+                <p className="text-sm text-primary mt-1">
+                    {editingId ? "Modifica los datos de la veterinaria" : "Completa la información para crear una nueva veterinaria"}
+                </p>
             </div>
-            <form id="veterinary-form" className="space-y-4" onSubmit={handleSubmit(onSubmit)} noValidate>
+
+            <form className="space-y-6" onSubmit={handleSubmit(onSubmit)} noValidate>
 
                 <Input
                     label="Nombre"
@@ -200,23 +204,25 @@ export default function VeterinaryForm({
                     name="logoImg"
                     control={control}
                     label="Cargar Imagen"
-                    className="w-full"
                 />
 
-                <div className="flex justify-end gap-3 pt-2">
+                <div className="flex gap-4 pt-4">
                     <Button
-                        text={editingId ? "Actualizar" : "Registrar"}
-                        variant="success"
-                        fullWidth={false}
+                        text={editingId ? "Actualizar Usuario" : "Crear Usuario"}
                         type="submit"
-                    />
-                    <Button
-                        text="Limpiar"
                         variant="primary"
-                        fullWidth={false}
-                        type="button"
-                        onClick={() => reset()}
+                        className="flex-1"
                     />
+
+                    {editingId && (
+                        <Button
+                            text="Cancelar"
+                            type="button"
+                            variant="secondary"
+                            onClick={() => reset()}
+                            className="flex-1"
+                        />
+                    )}
                 </div>
             </form>
         </div >);

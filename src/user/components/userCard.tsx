@@ -1,5 +1,5 @@
 import type { JSX } from "react";
-import { BagdeStatus } from "../../common/elements/bagde";
+import { BadgeStatus, Badge } from "../../common/elements/badge";
 import type { ColorVariant } from "../../common/types/variants";
 import type { UserProps } from "../../common/interfaces/user";
 import DropdownButton from "../../common/elements/dropdown";
@@ -11,68 +11,84 @@ import UserIcon from "../../assets/icons/user.svg?react";
  */
 interface UserCardProps extends UserProps {
     variant?: ColorVariant;
+    actions: {
+        view?: () => Promise<void>;
+        edit?: () => Promise<void>;
+        delete?: () => Promise<void>;
+        custom?: Array<{
+            label: string;
+            onClick: () => Promise<void>;
+        }>;
+    }
 }
 
 /**
  * Componente UserCard que muestra la información de un usuario.
- * Incluye un estado visual, avatar, nombre y descripción.
- * @param {UserCardProps} props - Propiedades del componente.
- * @returns {JSX.Element} Componente UserCard.
  */
-export default function UserCard({ variant = "primary", ...user }: UserCardProps): JSX.Element {
-    // Obtiene la referencia a la imagen del avatar
-    const avatar: JSX.Element = user.profileImg
-        ? (
-            <div
-                className="w-24 h-24 bg-gray-300 rounded-full"
-                style={{
-                    backgroundImage: `url(${new URL("../../assets/images/default-avatar.png", import.meta.url).href})`, backgroundSize: 'cover'
-                }}
-            />
-        )
-        : (
-            <div className="rounded-full bg-neutral-light w-24 h-24 flex items-center justify-center icon-neutral-medium">
-                <UserIcon className="w-18 h-18" />
-            </div>
-        );
+export default function UserCard({
+    variant = "primary",
+    actions,
+    ...user
+}: UserCardProps): JSX.Element {
+    const avatar: JSX.Element = user.profileImg ? (
+        <img
+            src={user.profileImg}
+            alt={user.username}
+            className="w-20 h-20 rounded-full object-cover border-4 border-[var(--neutral-gray010)]"
+        />
+    ) : (
+        <div className="w-20 h-20 rounded-full bg-[var(--neutral-gray010)] flex items-center justify-center">
+            <UserIcon className="w-10 h-10 icon-primary-dark" />
+        </div>
+    );
+
     return (
-        <div
-            className="bg-neutral-dark rounded-xl p-6 
-                shadow-md w-65 max-w-sm mx-auto 
-                relative text-primary-light"
-        >
-            {/* Estado */}
-            <div className="top-7 right-5 absolute">
-                <BagdeStatus
-                    variant={variant}
-                    text={user.isActive ? "Activo" : "Inactivo"}
-                />
-            </div>
-
-            {/* Avatar */}
-            <div className="flex justify-center mb-4">
-                {avatar}
-            </div>
-
-            {/* Nombre y descripción */}
-            <div className="text-center text-current mb-4">
-                <h3 className="text-xl font-bold">{user.username}</h3>
-                <p className="text-sm mt-2">
-                    {user.name}<br />
-                    {user.email}<br />
-                </p>
-            </div>
-
-            {/* Botones */}
-            <div className="flex justify-center gap-4 mt-6">
+        <div className="relative bg-white rounded-2xl shadow-lg p-6 w-full max-w-xs text-center border border-[var(--neutral-gray030)] transition hover:shadow-xl">
+            {/* Dropdown en la esquina superior derecha */}
+            <div className="absolute top-4 right-4">
                 <DropdownButton
                     text=""
                     variant="primary-light"
                     options={[
-                        { label: "Editar", onClick: () => console.log("Editar usuario") },
-                        { label: "Eliminar", onClick: () => console.log("Eliminar usuario") },
-                        { label: "Ver Detalles", onClick: () => console.log("Ver detalles del usuario") },
+                        ...(actions?.edit
+                            ? [{ label: "Editar", onClick: actions.edit }]
+                            : []),
+                        ...(actions?.delete
+                            ? [{ label: "Eliminar", onClick: actions.delete }]
+                            : []),
+                        ...(actions?.view
+                            ? [{ label: "Ver", onClick: actions.view }]
+                            : []),
+                        ...(actions?.custom || []),
                     ]}
+                />
+            </div>
+
+            {/* Avatar */}
+            <div className="flex justify-center mb-3">{avatar}</div>
+
+            {/* Nombre y descripción */}
+            <div className="mb-4">
+                <h3 className="text-lg font-semibold text-primary-dark">@{user.username}</h3>
+                <p className="text-sm text-neutral-dark leading-tight mt-1">
+                    {user.name}
+                    <br />
+                    {user.email}
+                </p>
+                <p>
+                    <Badge
+                        variant={user.type === 'admin' ? 'secondary' : 'tertiary'}
+                        text={user.type === 'admin' ? "Administrador" : "Usuario Regular"}
+                        position=""
+                    />
+                </p>
+            </div>
+
+            {/* Estado */}
+            <div className="flex justify-center">
+                <BadgeStatus
+                    variant={'success'}
+                    text={user.isActive ? "Activo" : "Inactivo"}
                 />
             </div>
         </div>

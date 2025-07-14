@@ -143,22 +143,26 @@ export default function VeterinaryPage(): JSX.Element {
     return (
         <>
             <section className="flex flex-col md:flex-row gap-4 w-full">
-                {/* Lista de Veterinarias */}
-                <VeterinaryList
-                    list={veterinaries}
-                    onEdit={loadVeterinaryForEdit}
-                    onDelete={deleteVeterinary}
-                    onView={viewVeterinary}
-                    onAccess={accessVeterinary}
-                    getActions={getAvailableActions}
-                />
+                <div className="md:flex-[60%] w-full">
+                    {/* Lista de Veterinarias */}
+                    <VeterinaryList
+                        list={veterinaries}
+                        onEdit={loadVeterinaryForEdit}
+                        onDelete={deleteVeterinary}
+                        onView={viewVeterinary}
+                        onAccess={accessVeterinary}
+                        getActions={getAvailableActions}
+                    />
+                </div>
+                <div className="md:flex-[40%] w-full">
+                    {/* Formulario */}
+                    <VeterinaryForm
+                        submited={handleFormSubmitted} // Callback para refrescar la lista después de enviar el formulario
+                        initialValues={veterinaryForEdition.initValues}
+                        editingId={veterinaryForEdition.id}
+                    />
 
-                {/* Formulario */}
-                <VeterinaryForm
-                    submited={handleFormSubmitted} // Callback para refrescar la lista después de enviar el formulario
-                    initialValues={veterinaryForEdition.initValues}
-                    editingId={veterinaryForEdition.id}
-                />
+                </div>
             </section>
 
             {/* Modal de Detalles */}

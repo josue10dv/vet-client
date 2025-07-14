@@ -1,6 +1,6 @@
 import type { JSX } from "react";
 import type { VeterinaryProps } from "../../common/interfaces/veterinaries";
-import { BagdeStatus } from "../../common/elements/bagde";
+import { BadgeStatus } from "../../common/elements/badge";
 
 /**
  * Propiedades del componente VeterinaryDetails.
@@ -49,7 +49,7 @@ export default function VeterinaryDetails({ veterinary }: VeterinaryDetailsProps
                 <div>
                     <h3 className="text-2xl font-bold text-gray-900">{veterinary.name}</h3>
                     <div className="flex items-center justify-center mt-2">
-                        <BagdeStatus
+                        <BadgeStatus
                             variant={veterinary.isActive ? 'success' : 'error'}
                             text={veterinary.isActive ? 'Activa' : 'Inactiva'}
                         />
