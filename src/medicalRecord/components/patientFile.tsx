@@ -84,7 +84,10 @@ export default function PatientFile(
                 <select
                     className="p-2 rounded-md border border-primary-dark/30 w-full max-w-xs"
                     value={selectedId}
-                    onChange={(e) => setSelectedId(e.target.value)}
+                    onChange={(e) => {
+                        setSelectedId(e.target.value);
+                        onChange({ patientId: e.target.value });
+                    }}
                 >
                     {mascotas.map(m => (
                         <option key={m.id} value={m.id}>{m.name}</option>
