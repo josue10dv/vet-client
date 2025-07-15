@@ -1,4 +1,4 @@
-import { useEffect, type JSX } from "react";
+import { useEffect, useState, type JSX } from "react";
 import Input from "../../common/elements/input";
 import Button from "../../common/elements/button";
 import Select from "../../common/elements/selector";
@@ -33,30 +33,50 @@ const userSchema = yup.object({
         .string()
         .required("El nombre completo es obligatorio")
         .min(6, "El nombre completo debe tener al menos 6 caracteres"),
-}).required();
+    veterinaryId: yup
+        .string()
+        .test("Veterinaria es obligatoria para usuarios regulares", function (value) {
+            const { type } = this.parent;
+            if (type === "user" && (!value || value.trim() === "")) {
+                return this.createError({ message: "La veterinaria es obligatoria para usuarios regulares" });
+            }
+            return true;
+        })
+        .default(null)
+        .nullable()
+}).required("El formulario es obligatorio");
 /**
  * Tipo inferido de los valores del formulario de veterinaria.
  * Utiliza `yup.InferType` para obtener el tipo basado en el esquema de validación.
  */
 type UserFormValues = yup.InferType<typeof userSchema>;
 
-// Propiedades del componente UserFormProps.
+
+/**
+ * Propiedades del componente UserForm.
+ * - `submited`: Función que se llama al enviar el formulario.
+ * - `initialValues`: Valores iniciales para el formulario, puede ser nulo.
+ * - `editingId`: ID del usuario que se está editando, puede ser nulo
+ * - `clearEditing`: Función para limpiar el estado de edición.
+ * - `veterinaryOptions`: Opciones de selección para las veterinarias.
+ */
 interface UserFormProps {
     submited?: () => void;
     initialValues?: Partial<UserFormValues> | null;
     editingId?: string | null; // ID de la veterinaria que se está editando
     clearEditing: () => void;
+    veterinaryOptions: { value: string, label: string }[];
 }
 
 export default function UserForm({
     submited,
     initialValues = null,
     editingId = null,
-    clearEditing
+    clearEditing,
+    veterinaryOptions = []
 }: UserFormProps): JSX.Element {
-    /*************************
-     ******** HOOKS **********
-     *************************/
+    // Estado que controla la visibilidad del select de veterinarias
+    const [isVisible, setIsVisible] = useState<boolean>(false);
     // Hook de react-hook-form para manejar el formulario.
     const {
         register,
@@ -154,7 +174,21 @@ export default function UserForm({
                     register={register}
                     error={errors.type}
                     selectClassName="input input-primary"
+                    onChange={(e) => {
+                        setIsVisible(e.target.value === "user");
+                    }}
                 />
+
+                {isVisible || initialValues?.type === "user" ? (
+                    <Select
+                        label="Veterinaria"
+                        name="veterinaryId"
+                        options={veterinaryOptions}
+                        register={register}
+                        error={errors.veterinaryId}
+                        selectClassName="input input-primary"
+                    />
+                ) : (<></>)}
 
                 <div className="flex gap-4 pt-4">
                     <Button

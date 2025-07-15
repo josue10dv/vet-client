@@ -30,6 +30,11 @@ export default function UserPage(): JSX.Element {
     const { showLoading, hideLoading } = useLoading();
     // Estado para manejar el listado de usuarios.
     const [users, setUsers] = useState<UserProps[]>([]);
+    // Estado para manejar el listado de veterinarias en un select.
+    const [veterinaries, setVeterinaries] = useState<{
+        value: string;
+        label: string;
+    }[]>([]);
     // Estado para controlar el modal de detalles
     const [modalState, setModalState] = useState<{
         isOpen: boolean;
@@ -43,6 +48,10 @@ export default function UserPage(): JSX.Element {
     useEffect(() => {
         fetchUsers();
     }, []);
+    // Obtiene el listado de veterinarias
+    useEffect(() => {
+        fetchVeterinaries();
+    }, []);
 
     /*************************
      ******** UTILS **********
@@ -53,6 +62,23 @@ export default function UserPage(): JSX.Element {
             showLoading();
             const response = await axiosInstance.get("/user/get-all");
             setUsers(response.data.payload.items || []);
+        } catch (error) {
+            console.error("Error al obtener usuarios:", error);
+        } finally {
+            hideLoading();
+        }
+    };
+
+    // Obtiene el listado de usuarios
+    const fetchVeterinaries = async () => {
+        try {
+            showLoading();
+            const response = await axiosInstance.get("/veterinary/get-all");
+            const options = response.data.payload.items.map((vet: { id: string, name: string }) => ({
+                value: vet.id,
+                label: vet.name
+            }));
+            setVeterinaries(options);
         } catch (error) {
             console.error("Error al obtener usuarios:", error);
         } finally {
@@ -198,6 +224,7 @@ export default function UserPage(): JSX.Element {
                         initialValues={userForEdition.initValues}
                         editingId={userForEdition.id}
                         clearEditing={clearEditing}
+                        veterinaryOptions={veterinaries}
                     />
                 </div>
             </section>

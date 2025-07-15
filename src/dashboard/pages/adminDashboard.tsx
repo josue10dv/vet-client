@@ -1,130 +1,130 @@
 import type { JSX } from "react";
-import { useState, useEffect } from "react";
-import { RequestHandler } from "../../common/services/requestHandler";
-import { triggerToast } from "../../common/services/toastHandler";
-import type { UserProps } from "../../common/interfaces/user";
-import type { VeterinaryProps } from "../../common/interfaces/veterinaries";
+// import { useState, useEffect } from "react";
+// import { RequestHandler } from "../../common/services/requestHandler";
+// import { triggerToast } from "../../common/services/toastHandler";
+// import type { UserProps } from "../../common/interfaces/user";
+// import type { VeterinaryProps } from "../../common/interfaces/veterinaries";
 
-interface DashboardStats {
-    totalUsers: number;
-    activeUsers: number;
-    totalVeterinaries: number;
-    activeVeterinaries: number;
-    totalAppointments?: number;
-    recentRegistrations: number;
-}
+// interface DashboardStats {
+//     totalUsers: number;
+//     activeUsers: number;
+//     totalVeterinaries: number;
+//     activeVeterinaries: number;
+//     totalAppointments?: number;
+//     recentRegistrations: number;
+// }
 
 /**
  * Dashboard principal para administradores con estadísticas del sistema
  * @returns Componente JSX del dashboard administrativo
  */
 export default function AdminDashboardPage(): JSX.Element {
-    const [stats, setStats] = useState<DashboardStats>({
-        totalUsers: 0,
-        activeUsers: 0,
-        totalVeterinaries: 0,
-        activeVeterinaries: 0,
-        totalAppointments: 0,
-        recentRegistrations: 0,
-    });
-    const [isLoading, setIsLoading] = useState(true);
-    const [recentUsers, setRecentUsers] = useState<UserProps[]>([]);
-    const [recentVeterinaries, setRecentVeterinaries] = useState<VeterinaryProps[]>([]);
+    // const [stats, setStats] = useState<DashboardStats>({
+    //     totalUsers: 0,
+    //     activeUsers: 0,
+    //     totalVeterinaries: 0,
+    //     activeVeterinaries: 0,
+    //     totalAppointments: 0,
+    //     recentRegistrations: 0,
+    // });
+    // const [isLoading, setIsLoading] = useState(true);
+    // const [recentUsers, setRecentUsers] = useState<UserProps[]>([]);
+    // const [recentVeterinaries, setRecentVeterinaries] = useState<VeterinaryProps[]>([]);
 
-    const requestHandler = RequestHandler.getInstance();
+    // const requestHandler = RequestHandler.getInstance();
 
-    useEffect(() => {
-        loadDashboardData();
-    }, []);
+    // useEffect(() => {
+    //     loadDashboardData();
+    // }, []);
 
-    const loadDashboardData = async () => {
-        try {
-            setIsLoading(true);
+    // const loadDashboardData = async () => {
+    //     try {
+    //         // setIsLoading(true);
             
-            // // Cargar usuarios
-            // const usersResponse = await requestHandler.get<UserProps[]>("/users");
-            // const users = usersResponse.data || [];
+    //         // // Cargar usuarios
+    //         // const usersResponse = await requestHandler.get<UserProps[]>("/users");
+    //         // const users = usersResponse.data || [];
             
-            // // Cargar veterinarias
-            // const veterinariesResponse = await requestHandler.get<VeterinaryProps[]>("/veterinaries");
-            // const veterinaries = veterinariesResponse.data || [];
+    //         // // Cargar veterinarias
+    //         // const veterinariesResponse = await requestHandler.get<VeterinaryProps[]>("/veterinaries");
+    //         // const veterinaries = veterinariesResponse.data || [];
 
-            // // Calcular estadísticas
-            // const totalUsers = users.length;
-            // const activeUsers = users.filter(user => user.isActive).length;
-            // const totalVeterinaries = veterinaries.length;
-            // const activeVeterinaries = veterinaries.filter(vet => vet.isActive).length;
+    //         // // Calcular estadísticas
+    //         // const totalUsers = users.length;
+    //         // const activeUsers = users.filter(user => user.isActive).length;
+    //         // const totalVeterinaries = veterinaries.length;
+    //         // const activeVeterinaries = veterinaries.filter(vet => vet.isActive).length;
             
-            // // Registros recientes (últimos 30 días)
-            // const thirtyDaysAgo = new Date();
-            // thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-            // const recentRegistrations = users.filter(user => 
-            //     new Date(user.createdAt) >= thirtyDaysAgo
-            // ).length;
+    //         // // Registros recientes (últimos 30 días)
+    //         // const thirtyDaysAgo = new Date();
+    //         // thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+    //         // const recentRegistrations = users.filter(user => 
+    //         //     new Date(user.createdAt) >= thirtyDaysAgo
+    //         // ).length;
 
-            // setStats({
-            //     totalUsers,
-            //     activeUsers,
-            //     totalVeterinaries,
-            //     activeVeterinaries,
-            //     recentRegistrations,
-            // });
+    //         // setStats({
+    //         //     totalUsers,
+    //         //     activeUsers,
+    //         //     totalVeterinaries,
+    //         //     activeVeterinaries,
+    //         //     recentRegistrations,
+    //         // });
 
-            // // Obtener usuarios recientes (últimos 5)
-            // const sortedUsers = users
-            //     .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-            //     .slice(0, 5);
-            // setRecentUsers(sortedUsers);
+    //         // // Obtener usuarios recientes (últimos 5)
+    //         // const sortedUsers = users
+    //         //     .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    //         //     .slice(0, 5);
+    //         // setRecentUsers(sortedUsers);
 
-            // Obtener veterinarias recientes (últimas 3)
-            // const sortedVeterinaries = veterinaries.slice(0, 3);
-            // setRecentVeterinaries(sortedVeterinaries);
+    //         // Obtener veterinarias recientes (últimas 3)
+    //         // const sortedVeterinaries = veterinaries.slice(0, 3);
+    //         // setRecentVeterinaries(sortedVeterinaries);
 
-        } catch (error) {
-            triggerToast("Error al cargar datos del dashboard", "error");
-            console.error("Error loading dashboard data:", error);
-        } finally {
-            setIsLoading(false);
-        }
-    };
+    //     } catch (error) {
+    //         triggerToast("Error al cargar datos del dashboard", "error");
+    //         console.error("Error loading dashboard data:", error);
+    //     } finally {
+    //         // setIsLoading(false);
+    //     }
+    // };
 
-    const StatCard = ({ title, value, subtitle, icon, color }: {
-        title: string;
-        value: number;
-        subtitle?: string;
-        icon: string;
-        color: string;
-    }) => (
-        <div className={`bg-white rounded-xl shadow-lg p-6 border-l-4 ${color} hover:shadow-xl transition-shadow duration-300`}>
-            <div className="flex items-center justify-between">
-                <div>
-                    <p className="text-sm font-medium text-gray-600 mb-1">{title}</p>
-                    <p className="text-3xl font-bold text-gray-900">{value}</p>
-                    {subtitle && <p className="text-xs text-gray-500 mt-1">{subtitle}</p>}
-                </div>
-                <div className={`text-3xl ${color.replace('border-l-', 'text-')}`}>
-                    {icon}
-                </div>
-            </div>
-        </div>
-    );
+    // const StatCard = ({ title, value, subtitle, icon, color }: {
+    //     title: string;
+    //     value: number;
+    //     subtitle?: string;
+    //     icon: string;
+    //     color: string;
+    // }) => (
+    //     <div className={`bg-white rounded-xl shadow-lg p-6 border-l-4 ${color} hover:shadow-xl transition-shadow duration-300`}>
+    //         <div className="flex items-center justify-between">
+    //             <div>
+    //                 <p className="text-sm font-medium text-gray-600 mb-1">{title}</p>
+    //                 <p className="text-3xl font-bold text-gray-900">{value}</p>
+    //                 {subtitle && <p className="text-xs text-gray-500 mt-1">{subtitle}</p>}
+    //             </div>
+    //             <div className={`text-3xl ${color.replace('border-l-', 'text-')}`}>
+    //                 {icon}
+    //             </div>
+    //         </div>
+    //     </div>
+    // );
 
-    const ActivityCard = ({ title, children }: { title: string; children: React.ReactNode }) => (
-        <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4 border-b pb-2">{title}</h3>
-            {children}
-        </div>
-    );
+    // const ActivityCard = ({ title, children }: { title: string; children: React.ReactNode }) => (
+    //     <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
+    //         <h3 className="text-lg font-semibold text-gray-800 mb-4 border-b pb-2">{title}</h3>
+    //         {children}
+    //     </div>
+    // );
 
-    if (isLoading) {
-        return (
-            <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
-                <div className="flex items-center justify-center h-64">
-                    <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600"></div>
-                </div>
-            </div>
-        );
-    }
+    // if (isLoading) {
+    //     return (
+    //         <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
+    //             <div className="flex items-center justify-center h-64">
+    //                 <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600"></div>
+    //             </div>
+    //         </div>
+    //     );
+    // }
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
@@ -138,9 +138,9 @@ export default function AdminDashboardPage(): JSX.Element {
                         Resumen general del sistema y estadísticas importantes
                     </p>
                 </div>
-
+                
                 {/* Stats Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                     <StatCard
                         title="Total de Usuarios"
                         value={stats.totalUsers}
@@ -169,11 +169,10 @@ export default function AdminDashboardPage(): JSX.Element {
                         icon="📈"
                         color="border-l-orange-500"
                     />
-                </div>
+                </div> */}
 
                 {/* Activity Grid */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-                    {/* Recent Users */}
+                {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
                     <ActivityCard title="Usuarios Recientes">
                         <div className="space-y-3">
                             {recentUsers.length > 0 ? (
@@ -214,7 +213,6 @@ export default function AdminDashboardPage(): JSX.Element {
                         </div>
                     </ActivityCard>
 
-                    {/* Recent Veterinaries */}
                     <ActivityCard title="Veterinarias">
                         <div className="space-y-3">
                             {recentVeterinaries.length > 0 ? (
@@ -247,7 +245,7 @@ export default function AdminDashboardPage(): JSX.Element {
                             )}
                         </div>
                     </ActivityCard>
-                </div>
+                </div> */}
 
                 {/* System Status */}
                 <div className="bg-white rounded-xl shadow-lg p-6">
