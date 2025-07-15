@@ -20,6 +20,8 @@ export default function HeaderUser(): JSX.Element {
             setActiveSection("mascotas");
         } else if (path.includes("miUsuario")) {
             setActiveSection("miUsuario");
+        } else if (path.includes("citas")) {
+            setActiveSection("citas");
         } else {
             setActiveSection("historias");
         }
@@ -46,7 +48,7 @@ export default function HeaderUser(): JSX.Element {
 
                     <nav>
                         <ul className="flex space-x-8">
-                            {["historias", "mascotas", "miUsuario"].map((section) => (
+                            {["historias", "mascotas", "miUsuario", "citas"].map((section) => (
                                 <li key={section}>
                                     <a
                                         href={`/${section === "historias" ? "historias" : section}`}

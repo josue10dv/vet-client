@@ -4,6 +4,8 @@ import Button from "../../common/elements/button";
 import Input from "../../common/elements/input";
 import type { Pet } from "../../common/interfaces/pets";
 import type { MedicalRecordState } from "../interfaces/medicalRecord";
+import MyModal from "../../common/elements/modal";
+import PetForm from "../../pet/components/petForm";
 
 /**
  * Propiedades del propietario de la mascota.
@@ -45,9 +47,17 @@ export default function PatientFile(
         onChange
     }: PaientFileProps
 ): JSX.Element {
+    /*************************
+     ******** HOOKS **********
+     *************************/
+    // Estado para manejar la lista de mascotas y la mascota seleccionada
     const [mascotas] = useState<Pet[]>(mascotasMock);
+    // Estado para manejar la mascota seleccionada por el usuario
     const [selectedId, setSelectedId] = useState<string>(mascotas[0]?.id || "");
+    // Estado para seleccionar una mascota específica
     const selectedMascota = mascotas.find(m => m.id === selectedId);
+    // Estado para manejar el modal de formulario de mascota
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
     const propietarioMock: Owner = {
         name: "Juan",
@@ -80,7 +90,12 @@ export default function PatientFile(
                         <option key={m.id} value={m.id}>{m.name}</option>
                     ))}
                 </select>
-                <Button variant="primary" text="Nueva Mascota" fullWidth={false} />
+                <Button
+                    variant="primary"
+                    text="Nueva Mascota"
+                    fullWidth={false}
+                    onClick={() => setIsModalOpen(true)}
+                />
             </div>
 
             {/* Información de la mascota */}
@@ -106,6 +121,17 @@ export default function PatientFile(
                 <Input readOnly name="" label="Teléfono" value={propietarioMock.phoneNumber} />
                 <Input readOnly name="" label="Correo electrónico" value={propietarioMock.email} />
             </div>
+
+            <MyModal isOpen={isModalOpen} onRequestClose={() => setIsModalOpen(false)}>
+                <div className="overflow-y-auto max-h-[90vh]">
+                    <PetForm
+                        editingId={null}
+                        submited={() => console.log("Datos de mascota:", data)}
+                        clearEditing={() => console.log("Cancelar edición")}
+                        isModalContained={true}
+                    />
+                </div>
+            </MyModal>
         </section>
     );
 }

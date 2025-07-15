@@ -2,7 +2,7 @@ import { useEffect, useState, type JSX } from "react";
 import PetList from "../components/petList";
 import PetForm from "../components/petForm";
 import PetDetails from "../components/petDetails";
-import Modal from "../../common/elements/modal";
+import MyModal from "../../common/elements/modal";
 import { axiosInstance } from "../../common/services/requestHandler";
 import type { Pet } from "../../common/interfaces/pets";
 import { useLoading } from "../../common/providers/loadingContext";
@@ -218,16 +218,16 @@ export default function PetPage(): JSX.Element {
             </section>
 
             {/* Modal de Detalles */}
-            <Modal
+            <MyModal
                 isOpen={modalState.isOpen}
-                onClose={closeModal}
-                title="Detalles de la Mascota"
-                size="lg"
+                onRequestClose={closeModal}
             >
                 {modalState.pet && (
-                    <PetDetails pet={modalState.pet} />
+                    <PetDetails
+                        pet={modalState.pet}
+                    />
                 )}
-            </Modal>
+            </MyModal>
         </>
     );
 }

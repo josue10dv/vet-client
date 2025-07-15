@@ -2,7 +2,7 @@ import { useEffect, useState, type JSX } from "react";
 import VeterinaryList from "../components/veterinaryList";
 import VeterinaryForm from "../components/veterinaryForm";
 import VeterinaryDetails from "../components/veterinaryDetails";
-import Modal from "../../common/elements/modal";
+import MyModal from "../../common/elements/modal";
 import { axiosInstance } from "../../common/services/requestHandler";
 import type { VeterinaryProps } from "../../common/interfaces/veterinaries";
 import { useLoading } from "../../common/providers/loadingContext";
@@ -166,16 +166,18 @@ export default function VeterinaryPage(): JSX.Element {
             </section>
 
             {/* Modal de Detalles */}
-            <Modal
+            <MyModal
                 isOpen={modalState.isOpen}
-                onClose={closeModal}
-                title="Detalles de la Veterinaria"
-                size="lg"
+                onRequestClose={closeModal}
             >
-                {modalState.veterinary && (
-                    <VeterinaryDetails veterinary={modalState.veterinary} />
-                )}
-            </Modal>
+                {
+                    modalState.veterinary ? (
+                        <VeterinaryDetails veterinary={modalState.veterinary} />
+                    ) : (
+                        <div>Cargando detalles de la veterinaria...</div>
+                    )
+                }
+            </MyModal>
         </>
     );
 }

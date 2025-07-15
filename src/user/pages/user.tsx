@@ -3,7 +3,7 @@ import { useEffect, useState, type JSX } from "react";
 import UserList from "../components/userList";
 import UserForm from "../components/userForm";
 import UserDetails from "../components/userDetails";
-import Modal from "../../common/elements/modal";
+import MyModal from "../../common/elements/modal";
 import { axiosInstance } from "../../common/services/requestHandler";
 import type { UserProps } from "../../common/interfaces/user";
 import { useLoading } from "../../common/providers/loadingContext";
@@ -203,16 +203,16 @@ export default function UserPage(): JSX.Element {
             </section>
 
             {/* Modal de Detalles */}
-            <Modal
+            <MyModal
                 isOpen={modalState.isOpen}
-                onClose={closeModal}
-                title="Detalles del Usuario"
-                size="lg"
+                onRequestClose={closeModal}
             >
-                {modalState.user && (
+                {modalState.user ? (
                     <UserDetails user={modalState.user} />
+                ) : (
+                    <div>Cargando detalles del usuario...</div>
                 )}
-            </Modal>
+            </MyModal>
         </>
     );
 }

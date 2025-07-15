@@ -44,19 +44,28 @@ const petSchema = yup.object({
  */
 type PetFormValues = yup.InferType<typeof petSchema>;
 
-// Propiedades del componente PetFormProps.
+/**
+ * Propiedades del componente PetForm.
+ * - `submited`: Función que se llama al enviar el formulario.
+ * - `initialValues`: Valores iniciales para el formulario, puede ser nulo.
+ * - `editingId`: ID de la mascota en modo edición, puede ser nulo.
+ * - `clearEditing`: Función para limpiar el estado de edición.
+ * - `isModalContained`: Indica si el formulario está contenido dentro de un modal.
+ */
 interface PetFormProps {
     submited?: () => void;
     initialValues?: Partial<PetFormValues> | null;
-    editingId?: string | null; // ID de la mascota que se está editando
+    editingId?: string | null;
     clearEditing: () => void;
+    isModalContained?: boolean;
 }
 
 export default function PetForm({
     submited,
     initialValues = null,
     editingId = null,
-    clearEditing
+    clearEditing,
+    isModalContained = false
 }: PetFormProps): JSX.Element {
     /*************************
      ******** HOOKS **********
@@ -131,10 +140,18 @@ export default function PetForm({
     ];
 
     /*************************
+     ******** UTILS **********
+     *************************/
+    // Obtiene las clases del contenedor del formlario cuando esta dentro de un modal.
+    const baseClases = isModalContained
+        ? "flex-1 bg-white text-primary-dark p-2"
+        : "flex-1 bg-white text-primary-dark p-6 rounded-xl shadow-sm border border-[var(--neutral-gray020)]";
+
+    /*************************
      ******** RENDER **********
      *************************/
     return (
-        <div className="flex-1 bg-white text-primary-dark p-6 rounded-xl shadow-sm border border-[var(--neutral-gray020)]">
+        <div className={baseClases}>
             <div className="mb-6">
                 <h2 className="text-2xl font-bold text-primary-dark">
                     {editingId ? "Editar Mascota" : "Crear Nueva Mascota"}
