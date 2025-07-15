@@ -115,6 +115,7 @@ export default function PetForm({
     };
 
     const speciesOptions = [
+        { value: "", label: "Seleccione" },
         { value: "dog", label: "Perro" },
         { value: "cat", label: "Gato" },
         { value: "bird", label: "Ave" },
@@ -133,91 +134,90 @@ export default function PetForm({
      ******** RENDER **********
      *************************/
     return (
-        <div className="bg-white rounded-xl shadow-sm border border-[var(--neutral-gray020)] h-fit">
-            <div className="p-6 border-b border-gray-200">
-                <h2 className="text-xl font-semibold text-primary-dark">
-                    {editingId ? "Editar Mascota" : "Registrar Nueva Mascota"}
+        <div className="flex-1 bg-white text-primary-dark p-6 rounded-xl shadow-sm border border-[var(--neutral-gray020)]">
+            <div className="mb-6">
+                <h2 className="text-2xl font-bold text-primary-dark">
+                    {editingId ? "Editar Mascota" : "Crear Nueva Mascota"}
                 </h2>
                 <p className="text-sm text-primary mt-1">
-                    {editingId ? "Modifica los datos de la mascota" : "Completa los campos para registrar una nueva mascota"}
+                    {editingId ? "Modifica los datos de la mascota" : "Completa la información para crear una nueva mascota"}
                 </p>
             </div>
 
-            <div className="p-6">
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                    {/* Nombre */}
-                    <Input
-                        id="name"
-                        label="Nombre de la mascota"
-                        placeholder="Ej: Max, Luna, Firulais"
-                        type="text"
-                        {...register("name")}
-                        error={errors.name?.message}
-                    />
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" noValidate>
+                {/* Nombre */}
+                <Input
+                    id="name"
+                    label="Nombre de la mascota"
+                    placeholder="Ej: Max, Luna, Firulais"
+                    type="text"
+                    {...register("name")}
+                    error={errors.name}
+                />
 
-                    {/* Especie */}
-                    <Select
-                        id="species"
-                        label="Especie"
-                        placeholder="Selecciona la especie"
-                        options={speciesOptions}
-                        {...register("species")}
-                        error={errors.species?.message}
-                    />
+                {/* Especie */}
+                <Select
+                    id="species"
+                    label="Especie"
+                    defaultValue=""
+                    options={speciesOptions}
+                    {...register("species")}
+                    error={errors.species}
+                />
 
-                    {/* Raza */}
-                    <Input
-                        id="breed"
-                        label="Raza"
-                        placeholder="Ej: Labrador, Persa, Canario"
-                        type="text"
-                        {...register("breed")}
-                        error={errors.breed?.message}
-                    />
+                {/* Raza */}
+                <Input
+                    id="breed"
+                    label="Raza"
+                    placeholder="Ej: Labrador, Persa, Canario"
+                    type="text"
+                    {...register("breed")}
+                    error={errors.breed}
+                />
 
-                    {/* Edad */}
-                    <Input
-                        id="age"
-                        label="Edad"
-                        placeholder="Ej: 3"
-                        type="text"
-                        {...register("age")}
-                        error={errors.age?.message}
-                    />
+                {/* Edad */}
+                <Input
+                    id="age"
+                    label="Edad"
+                    placeholder="Ej: 3"
+                    type="text"
+                    {...register("age")}
+                    error={errors.age}
+                />
 
-                    {/* Sexo */}
-                    <Select
-                        id="sex"
-                        label="Sexo"
-                        placeholder="Selecciona el sexo"
-                        options={sexOptions}
-                        {...register("sex")}
-                        error={errors.sex?.message}
-                    />
+                {/* Sexo */}
+                <Select
+                    id="sex"
+                    label="Sexo"
+                    options={sexOptions}
+                    {...register("sex")}
+                    error={errors.sex}
+                />
 
-                    {/* Botones */}
-                    <div className="flex gap-3 pt-4">
+                {/* Botones */}
+                <div className="flex gap-3 pt-4">
+                    <Button
+                        text={editingId ? "Actualizar Mascota" : "Registrar Mascota"}
+                        type="submit"
+                        variant="primary"
+                        className="flex-1"
+                    >
+                        {editingId ? "Actualizar Mascota" : "Registrar Mascota"}
+                    </Button>
+
+                    {editingId && (
                         <Button
-                            type="submit"
+                            text="Limpiar"
+                            type="button"
                             variant="primary"
+                            onClick={handleCancel}
                             className="flex-1"
                         >
-                            {editingId ? "Actualizar Mascota" : "Registrar Mascota"}
+                            Limpiar
                         </Button>
-                        
-                        {editingId && (
-                            <Button
-                                type="button"
-                                variant="secondary"
-                                onClick={handleCancel}
-                                className="flex-1"
-                            >
-                                Cancelar
-                            </Button>
-                        )}
-                    </div>
-                </form>
-            </div>
+                    )}
+                </div>
+            </form>
         </div>
     );
 }
