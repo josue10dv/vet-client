@@ -76,7 +76,7 @@ export default function HeaderUser(): JSX.Element {
 
                         <nav>
                             <ul className="flex space-x-8">
-                                {["historias", "mascotas", "miUsuario", "citas"].map((section) => (
+                                {["historias", "mascotas", "citas", "miUsuario"].map((section) => (
                                     <li key={section}>
                                         <a
                                             href={`/${section === "historias" ? "historias" : section}`}
@@ -110,7 +110,7 @@ export default function HeaderUser(): JSX.Element {
             {/* Header Mobile */}
             <header className="md:hidden fixed top-0 left-0 right-0 z-50">
                 <div className="flex justify-center p-4">
-                    <div 
+                    <div
                         ref={dropdownRef}
                         className="bg-secondary text-on-secondary w-full max-w-[90%] px-4 py-2 rounded-full shadow-lg relative"
                     >
@@ -144,7 +144,7 @@ export default function HeaderUser(): JSX.Element {
                                     </div>
                                     <div>
                                         <div className="text-xs text-gray-500">Usuario</div>
-                                        <div 
+                                        <div
                                             className="font-semibold text-sm underline cursor-pointer hover:text-blue-600 transition-colors"
                                             onClick={() => {
                                                 window.location.href = "/miUsuario";
