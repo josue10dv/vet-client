@@ -32,13 +32,6 @@ export default function UserDetails({ user }: UserDetailsProps): JSX.Element {
         }
     };
 
-    // Obtener color del tipo de usuario
-    const getTypeColor = (type: string) => {
-        return type === 'admin' 
-            ? 'bg-purple-100 text-purple-800' 
-            : 'bg-blue-100 text-blue-800';
-    };
-
     return (
         <div className="space-y-6">
             {/* Avatar y Información Principal */}
