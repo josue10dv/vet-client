@@ -30,8 +30,14 @@ export default function PetCard({
     actions,
     ...pet
 }: PetCardProps): JSX.Element {
-    const avatar: JSX.Element = (
-        <div className="w-14 h-14 rounded-full bg-[var(--neutral-gray010)] flex items-center justify-center">
+    const avatar: JSX.Element = pet.img ? (
+        <img
+            src={pet.img}
+            alt={pet.name}
+            className="w-20 h-20 rounded-full object-cover border-4 border-[var(--neutral-gray010)]"
+        />
+    ) : (
+        <div className="w-20 h-20 rounded-full bg-[var(--neutral-gray010)] flex items-center justify-center">
             <PetIcon className="w-7 h-7 icon-primary-dark" />
         </div>
     );
@@ -71,9 +77,7 @@ export default function PetCard({
 
             {/* Avatar */}
             <div className="mb-2">
-                <div className="w-14 h-14 rounded-full bg-[var(--neutral-gray010)] flex items-center justify-center">
-                    <PetIcon className="w-6 h-6 icon-primary-dark" />
-                </div>
+                {avatar}
             </div>
 
             {/* Nombre */}

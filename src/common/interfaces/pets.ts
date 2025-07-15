@@ -6,6 +6,7 @@
  * - `breed`: Raza de la mascota.
  * - `age`: Edad de la mascota.
  * - `sex`: Sexo de la mascota (ej. macho, hembra).
+ * - `img`: URL de la imagen de la mascota (opcional).
  */
 export interface Pet {
     id: string;
@@ -14,4 +15,5 @@ export interface Pet {
     breed: string;
     age: string
     sex: 'male' | 'female';
+    img?: string;
 }

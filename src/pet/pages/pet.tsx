@@ -182,7 +182,8 @@ export default function PetPage(): JSX.Element {
     };
 
     // Determina qué acciones están disponibles para cada mascota
-    const getAvailableActions = (pet: Pet) => {
+    const getAvailableActions = () => {
+
         return {
             onEdit: loadPetForEdit,
             onDelete: deletePet,

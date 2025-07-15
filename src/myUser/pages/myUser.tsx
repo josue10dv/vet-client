@@ -1,5 +1,5 @@
 import { useState, useEffect, type JSX } from "react";
-import { useForm, type SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import Button from "../../common/elements/button";
 import Input from "../../common/elements/input";
@@ -93,7 +93,7 @@ export default function MyUser(): JSX.Element {
         control: controlProfile,
         formState: { errors: errorsProfile },
         setValue: setValueProfile,
-        reset: resetProfile
+        // reset: resetProfile
     } = useForm<ProfileFormValues>({
         resolver: yupResolver(profileSchema)
     });
