@@ -25,7 +25,7 @@ interface Option {
 interface FormSelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
     label: string;
     name: string;
-    register: any;
+    register?: any;
     options: Option[];
     error?: FieldError;
     containerClassName?: string;
@@ -43,11 +43,11 @@ export default function Select({
     label,
     name,
     register,
-    options,
     error,
     containerClassName = "mb-5",
     labelClassName = "block text-sm font-medium text-current mb-2",
     selectClassName = "",
+    options,
     ...rest
 }: FormSelectProps): JSX.Element {
     const baseStyle = "w-full p-3 rounded-md outline-none input";
@@ -59,10 +59,11 @@ export default function Select({
             </label>
             <select
                 id={name}
-                {...register(name)}
+                name={name}
+                {...(register ? register(name) : {})}
                 {...rest}
                 className={`${baseStyle} ${selectClassName}`}
-                defaultValue={""}
+                defaultValue=""
             >
                 <option value="">Seleccione una opción</option>
                 {options.map(({ label, value }) => (

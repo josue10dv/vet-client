@@ -14,7 +14,7 @@ import type { FieldError } from "react-hook-form";
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     label: string;
     name: string;
-    register: any;
+    register?: any;
     error?: FieldError;
     containerClassName?: string;
     labelClassName?: string;
@@ -38,6 +38,7 @@ export default function Input({
     ...rest
 }: InputProps): JSX.Element {
     const inputBaseStyle = "w-full p-3 rounded-md outline-none input";
+
     return (
         <div className={containerClassName}>
             <label htmlFor={name} className={labelClassName}>
@@ -45,7 +46,8 @@ export default function Input({
             </label>
             <input
                 id={name}
-                {...register(name)}
+                name={name}
+                {...(register ? register(name) : {})}
                 {...rest}
                 className={`${inputBaseStyle} ${inputClassName}`}
             />
