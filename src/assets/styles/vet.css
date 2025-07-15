@@ -706,3 +706,20 @@ section {
   border: none;
   cursor: pointer;
 }
+
+/* ========================================= */
+/* FULL CALENDAR */
+/* ========================================= */
+.fc {
+  font-family: inherit;
+  font-size: 14px;
+}
+.fc-toolbar-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+.fc-button {
+  background-color: var(--semantic-primary);
+  color: white;
+  border: none;
+}

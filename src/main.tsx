@@ -7,6 +7,7 @@ import './assets/styles/vet.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { LoadingProvider } from './common/providers/loadingContext';
 import LoadingScreen from './common/utilities/loadingScreen';
+import { SessionProvider } from './common/context/sessionProvider';
 
 /**
  * Componente principal de la aplicación 4Pets.
@@ -16,11 +17,13 @@ import LoadingScreen from './common/utilities/loadingScreen';
 function App(): JSX.Element {
   const routes = useRoutes(appRoutes);
   return (
-    <LoadingProvider>
-      <LoadingScreen />
-      {routes}
-      <ToastContainer />
-    </LoadingProvider>
+    <SessionProvider>
+      <LoadingProvider>
+        <LoadingScreen />
+        {routes}
+        <ToastContainer />
+      </LoadingProvider>
+    </SessionProvider>
   );
 }
 

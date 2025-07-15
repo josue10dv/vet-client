@@ -1,13 +1,13 @@
-import type { JSX, ReactNode } from "react";
+import type { JSX } from "react";
 import Footer from "../common/utilities/footer";
 import HeaderAdmin from "../common/utilities/headerAdmin";
 
 /**
  * Props para el componente GeneralLayout.
- * @property {ReactNode} children - El contenido que se renderizará dentro del layout general.
+ * - `children`: Elemento JSX que representa el contenido que se renderizará dentro del layout.
  */
 interface GeneralLayoutProps {
-    children: ReactNode;
+    children: JSX.Element;
 }
 
 /**
@@ -23,7 +23,7 @@ export default function AdminLayout({ children }: GeneralLayoutProps): JSX.Eleme
             <HeaderAdmin />
 
             {/* Content */}
-            <main className="flex-1 bg-gray-100 mt-27 md:mt-17 p-6">
+            <main className="flex-1 bg-gray-100 pt-32 md:pt-22 p-6">
                 {children}
             </main>
 
