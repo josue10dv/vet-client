@@ -6,6 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { axiosInstance } from "../../common/services/requestHandler";
 import { triggerToast } from "../../common/services/toastHandler";
 import { useEffect, type JSX } from "react";
+import Select from "../../common/elements/selector";
 
 /**
  * Esquema de validación para el formulario de citas.
@@ -44,6 +45,7 @@ type AppointmentFormValues = yup.InferType<typeof eventSchema>;
  * - `editingId`: ID de la mascota en modo edición, puede ser nulo.
  * - `clearEditing`: Función para limpiar el estado de edición.
  * - `closeModal`: Función para cerrar el modal.
+ * - `petOptions`: Opciones de mascotas para el selector.
  */
 interface AppointmentFormProps {
     submited?: () => void;
@@ -51,6 +53,7 @@ interface AppointmentFormProps {
     editingId?: string | null;
     clearEditing: () => void;
     closeModal: () => void;
+    petOptions?: { value: string; label: string }[];
 }
 
 export default function NewEventForm({
@@ -58,7 +61,8 @@ export default function NewEventForm({
     initialValues = null,
     editingId = null,
     clearEditing,
-    closeModal
+    closeModal,
+    petOptions = []
 }: AppointmentFormProps): JSX.Element {
     /*************************
     ******** HOOKS **********
@@ -150,6 +154,16 @@ export default function NewEventForm({
                     error={errors.time}
                 />
             </div>
+
+            {/* Mascota */}
+            <Select
+                label="Mascota"
+                name="petId"
+                options={petOptions}
+                register={register}
+                error={errors.petId}
+                selectClassName="input input-primary"
+            />
 
             {/* Acciones */}
             <div className="flex justify-end gap-3 pt-6">
