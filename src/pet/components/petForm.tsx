@@ -7,14 +7,16 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { axiosInstance } from "../../common/services/requestHandler";
 import { triggerToast } from "../../common/services/toastHandler";
+import ImageUpload from "../../common/elements/imageUpload";
+import TextArea from "../../common/elements/textArea";
 
 /**
  * Esquema de validación para el formulario de mascotas.
  * Utiliza Yup para definir las reglas de validación.
  * - El campo `name` es obligatorio y debe tener al menos 2 caracteres.
- * - El campo `species` es obligatorio.
- * - El campo `breed` es obligatorio y debe tener al menos 2 caracteres.
- * - El campo `age` es obligatorio y debe ser un número mayor a 0.
+ * - El campo `type` es obligatorio.
+ * - El campo `type` es obligatorio y debe tener al menos 2 caracteres.
+ * - El campo `birthMonthYear` es obligatorio y debe ser un número mayor a 0.
  * - El campo `sex` es obligatorio y debe ser uno de los valores permitidos ("male", "female").
  */
 const petSchema = yup.object({
@@ -22,20 +24,53 @@ const petSchema = yup.object({
         .string()
         .required("El nombre de la mascota es obligatorio")
         .min(2, "El nombre debe tener al menos 2 caracteres"),
-    species: yup
+    type: yup
         .string()
         .required("La especie es obligatoria"),
     breed: yup
         .string()
         .required("La raza es obligatoria")
         .min(2, "La raza debe tener al menos 2 caracteres"),
-    age: yup
+    birthMonthYear: yup
         .string()
-        .required("La edad es obligatoria"),
+        .required("La fecha de nacimiento es obligatoria"),
     sex: yup
         .string()
         .required("El sexo es obligatorio")
         .oneOf(["male", "female"], "Sexo inválido"),
+    image: yup
+        .mixed()
+        .nullable()
+        .test("fileSize", "El archivo es demasiado grande (máximo 2MB)", (value) => {
+            if (value && value instanceof File) {
+                return value.size <= 2 * 1024 * 1024; // 2 MB
+            }
+            return true; // Si no hay archivo, es válido
+        })
+        .test("fileType", "Solo se permiten archivos de imagen (JPG, PNG, GIF)", (value) => {
+            if (value && value instanceof File) {
+                const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+                return allowedTypes.includes(value.type);
+            }
+            return true; // Si no hay archivo, es válido
+        })
+        .default(null),
+    ownerName: yup
+        .string()
+        .required("El nombre del propietario es obligatorio")
+        .min(2, "El nombre del propietario debe tener al menos 2 caracteres"),
+    ownerEmail: yup
+        .string()
+        .required("El email del propietario es obligatorio")
+        .email("Email inválido"),
+    ownerPhone: yup
+        .string()
+        .required("El teléfono del propietario es obligatorio")
+        .min(10, "El teléfono debe tener al menos 10 caracteres"),
+    description: yup
+        .string()
+        .required("La descripción es obligatoria")
+        .min(10, "La descripción debe tener al menos 10 caracteres"),
 }).required();
 
 /**
@@ -75,6 +110,7 @@ export default function PetForm({
         register,
         handleSubmit,
         reset,
+        control,
         formState: { errors },
     } = useForm<PetFormValues>({
         resolver: yupResolver(petSchema),
@@ -91,18 +127,33 @@ export default function PetForm({
         try {
             const isEditing = Boolean(editingId);
             let response;
+            
+            // Crear FormData para manejar la imagen y otros datos
+            const formData = new FormData();
+            
+            // Agregar todos los campos del formulario al FormData
+            Object.entries(petData).forEach(([key, value]) => {
+                if (key === 'image' && value instanceof File) {
+                    // Agregar la imagen como archivo
+                    formData.append('image', value);
+                } else if (value !== null && value !== undefined) {
+                    // Agregar otros campos como texto
+                    formData.append(key, String(value));
+                }
+            });
+
             const config = {
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'multipart/form-data',
                 }
             };
 
             if (isEditing) {
                 // Modo edición: usar endpoint PUT con ID
-                response = await axiosInstance.patch(`/pet/update/${editingId}`, petData, config);
+                response = await axiosInstance.patch(`/pet/update/${editingId}`, formData, config);
             } else {
                 // Modo creación: usar endpoint POST
-                response = await axiosInstance.post("/pet/create", petData, config);
+                response = await axiosInstance.post("/pet/create", formData, config);
             }
 
             const { success, message } = response.data;
@@ -111,6 +162,7 @@ export default function PetForm({
             if (success) {
                 if (submited) submited();
                 reset();
+                clearEditing();
             }
         } catch (error) {
             console.error("Error al procesar la mascota:", error);
@@ -124,7 +176,6 @@ export default function PetForm({
     };
 
     const speciesOptions = [
-        { value: "", label: "Seleccione" },
         { value: "dog", label: "Perro" },
         { value: "cat", label: "Gato" },
         { value: "bird", label: "Ave" },
@@ -174,12 +225,12 @@ export default function PetForm({
 
                 {/* Especie */}
                 <Select
-                    id="species"
+                    id="type"
                     label="Especie"
                     defaultValue=""
                     options={speciesOptions}
-                    {...register("species")}
-                    error={errors.species}
+                    {...register("type")}
+                    error={errors.type}
                 />
 
                 {/* Raza */}
@@ -192,14 +243,14 @@ export default function PetForm({
                     error={errors.breed}
                 />
 
-                {/* Edad */}
+                {/* Fecha de nacimiento */}
                 <Input
-                    id="age"
-                    label="Edad"
-                    placeholder="Ej: 3"
+                    id="birthMonthYear"
+                    label="Fecha nacimiento"
+                    placeholder="Ej: 01/2020"
                     type="text"
-                    {...register("age")}
-                    error={errors.age}
+                    {...register("birthMonthYear")}
+                    error={errors.birthMonthYear}
                 />
 
                 {/* Sexo */}
@@ -209,6 +260,51 @@ export default function PetForm({
                     options={sexOptions}
                     {...register("sex")}
                     error={errors.sex}
+                />
+
+                {/* Imagen de la mascota */}
+                <ImageUpload
+                    name="image"
+                    control={control}
+                    label="Foto de la mascota"
+                />
+
+                {/* Descripción */}
+                <TextArea
+                    label="Descripción"
+                    {...register("description")}
+                    error={errors.description}
+                />
+
+                {/* Información del propietario */}
+                <div className="mb-6">
+                    <h3 className="text-xl font-bold text-primary-dark">Información del propietario</h3>
+                </div>
+                <Input
+                    id="ownerName"
+                    label="Nombre del propietario"
+                    placeholder="Ej: Juan Pérez"
+                    type="text"
+                    {...register("ownerName")}
+                    error={errors.ownerName}
+                />
+
+                <Input
+                    id="ownerEmail"
+                    label="Email del propietario"
+                    placeholder="Ej: juanperez@example.com"
+                    type="email"
+                    {...register("ownerEmail")}
+                    error={errors.ownerEmail}
+                />
+
+                <Input
+                    id="ownerPhone"
+                    label="Teléfono del propietario"
+                    placeholder="Ej: +1234567890"
+                    type="tel"
+                    {...register("ownerPhone")}
+                    error={errors.ownerPhone}
                 />
 
                 {/* Botones */}

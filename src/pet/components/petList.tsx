@@ -80,9 +80,32 @@ export default function PetList({
 
         return {
             ...pet,
-            actions: allowedActions
+            actions: allowedActions,
+            // Calcula la edad
+            age: getPetAge(pet.birthMonthYear),
         };
     });
+
+    function getPetAge(birthMonthYear: string): number {
+        const [monthStr, yearStr] = birthMonthYear.split('/');
+        const birthMonth = parseInt(monthStr) - 1; // JS usa 0 = enero
+        const birthYear = parseInt(yearStr);
+
+        const fechaNacimiento = new Date(birthYear, birthMonth);
+        const hoy = new Date();
+
+        let edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+
+        // Si aún no ha llegado el mes de cumpleaños este año, restamos 1
+        if (
+            hoy.getMonth() < fechaNacimiento.getMonth() ||
+            (hoy.getMonth() === fechaNacimiento.getMonth() && hoy.getDate() < 1)
+        ) {
+            edad--;
+        }
+
+        return edad;
+    }
 
     /*************************
      ******** RENDER **********

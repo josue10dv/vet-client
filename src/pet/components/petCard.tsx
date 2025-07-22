@@ -4,6 +4,7 @@ import type { ColorVariant } from "../../common/types/variants";
 import type { Pet } from "../../common/interfaces/pets";
 import DropdownButton from "../../common/elements/dropdown";
 import PetIcon from "../../assets/icons/pet.svg?react";
+import { EnvHandler } from "../../common/services/envHandler";
 
 /**
  * Propiedades del componente PetCard.
@@ -30,11 +31,18 @@ export default function PetCard({
     actions,
     ...pet
 }: PetCardProps): JSX.Element {
-    const avatar: JSX.Element = pet.img ? (
+    const env = EnvHandler.getInstance();
+    const avatar: JSX.Element = pet.image ? (
         <img
-            src={pet.img}
+            src={`${env.getBackendUrl() || 'http://localhost:3001'}/${pet.image}`}
             alt={pet.name}
             className="w-20 h-20 rounded-full object-cover border-4 border-[var(--neutral-gray010)]"
+            onError={(e) => {
+                // Fallback si la imagen no se puede cargar
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+                target.nextElementSibling?.classList.remove('hidden');
+            }}
         />
     ) : (
         <div className="w-20 h-20 rounded-full bg-[var(--neutral-gray010)] flex items-center justify-center">
@@ -99,7 +107,7 @@ export default function PetCard({
 
             {/* Especie y Raza */}
             <div className="text-sm text-neutral-dark leading-tight">
-                {getSpeciesDisplayName(pet.species)}
+                {getSpeciesDisplayName(pet.type)}
                 <br />
                 {pet.breed}
             </div>
