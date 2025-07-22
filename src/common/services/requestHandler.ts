@@ -1,5 +1,5 @@
 import axios, { AxiosError, type AxiosInstance } from "axios";
-// import { EnvHandler } from "./envHandler";
+import { EnvHandler } from "./envHandler";
 import { triggerToast } from "./toastHandler";
 
 /**
@@ -12,9 +12,10 @@ export class RequestHandler {
     private axiosInstance: AxiosInstance;
 
     private constructor() {
-        // const env = EnvHandler.getInstance();
+        const env = EnvHandler.getInstance();
+        console.log("Configurando Axios con URL:", env.getBackendUrl());
         this.axiosInstance = axios.create({
-            baseURL: 'http://localhost:3000', // Cambia esto a env.getBackendUrl() si es necesario
+            baseURL: env.getBackendUrl(),
             timeout: 10000,
             withCredentials: true,
         });
