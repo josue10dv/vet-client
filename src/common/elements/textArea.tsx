@@ -5,6 +5,9 @@ interface TextAreaProps {
     name: string;
     register?: any;
     error?: FieldError;
+    onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    placeholder?: string;
+    value?: string;
 }
 
 export default function TextArea({
@@ -12,6 +15,9 @@ export default function TextArea({
     name,
     register,
     error,
+    placeholder,
+    value = "",
+    onChange,
     ...rest
 }: TextAreaProps) {
     return (
@@ -22,8 +28,11 @@ export default function TextArea({
             <textarea
                 id={name}
                 name={name}
+                {...(value ? { value } : {})}
+                {...(placeholder ? { placeholder } : {})}
                 {...(register ? register(name) : {})}
                 {...rest}
+                onChange={onChange}
                 className="p-3 rounded-md border border-primary-dark/30 bg-neutral-gray010 text-primary-dark resize-y min-h-[120px]"
             />
         </div>

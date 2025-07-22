@@ -3,7 +3,7 @@ import type { JSX } from "react";
 /**
  * Tipos para los diferentes eventos disponibles
  */
-export type Event = "seguimiento" | "vacuna" | "desparacitación" | "otro";
+export type Event = "seguimiento" | "vacuna" | "desparacitación" | "otro" | "";
 
 /**
  * Propiedades para una fila de medicamento.

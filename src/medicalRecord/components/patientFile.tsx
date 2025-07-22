@@ -1,32 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { JSX } from "react";
 import Button from "../../common/elements/button";
 import Input from "../../common/elements/input";
-import type { Pet } from "../../common/interfaces/pets";
 import type { MedicalRecordState } from "../interfaces/medicalRecord";
 import MyModal from "../../common/elements/modal";
 import PetForm from "../../pet/components/petForm";
-
-/**
- * Propiedades del propietario de la mascota.
- * - `name`: Nombres del propietario.
- * - `lastName`: Apellidos del propietario.
- * - `identification`: Cédula o RUC del propietario.
- * - `phoneNumber`: Teléfono de contacto del propietario.
- * - `email`: Correo electrónico del propietario.
- */
-interface Owner {
-    name: string;
-    lastName: string;
-    identification: string;
-    phoneNumber: string;
-    email: string;
-}
-
-const mascotasMock: Pet[] = [
-    { id: "1", name: "Luna", species: "Canina", breed: "Labrador", age: "4 años", sex: "female" },
-    { id: "2", name: "Simba", species: "Felina", breed: "Siames", age: "2 años", sex: "male" }
-];
+import { useLoading } from "../../common/providers/loadingContext";
+import { axiosInstance } from "../../common/services/requestHandler";
 
 /**
  * Propiedades del componente PaientFile.
@@ -50,21 +30,59 @@ export default function PatientFile(
     /*************************
      ******** HOOKS **********
      *************************/
+    // Estado para manejar el estado de carga del formulario.
+    const { showLoading, hideLoading } = useLoading();
     // Estado para manejar la lista de mascotas y la mascota seleccionada
-    const [mascotas] = useState<Pet[]>(mascotasMock);
+    const [pets, setPets] = useState<any[]>([]);
     // Estado para manejar la mascota seleccionada por el usuario
-    const [selectedId, setSelectedId] = useState<string>(mascotas[0]?.id || "");
+    const [selectedId, setSelectedId] = useState<string>(pets[0]?.id || "");
     // Estado para seleccionar una mascota específica
-    const selectedMascota = mascotas.find(m => m.id === selectedId);
+    const [selectedPet, setSelectedPet] = useState<any | undefined>(undefined);
     // Estado para manejar el modal de formulario de mascota
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    // Obtiene el listado de veterinarias
+    useEffect(() => {
+        fetchPets();
+    }, []);
+    // Efecto para actualizar el ID de la mascota seleccionada al cargar los datos
+    useEffect(() => {
+        if (data.patientId) {
+            setSelectedId(data.patientId);
+            const selected = pets.find(p => p.value === data.patientId);
+            if (selected) {
+                setSelectedPet(selected.pet);
+            }
+        }
+    }, [data.patientId, pets]);
 
-    const propietarioMock: Owner = {
-        name: "Juan",
-        lastName: "Pérez",
-        identification: "1723456789",
-        phoneNumber: "0991234567",
-        email: "juan.perez@email.com"
+    // Obtiene el listado de mascotas
+    const fetchPets = async () => {
+        try {
+            showLoading();
+            const response = await axiosInstance.get("/pet/get-all");
+            const options = response.data.payload.items.map((item: any) => {
+                return {
+                    value: item.id,
+                    label: item.name,
+                    pet: {
+                        id: item.id,
+                        name: item.name,
+                        type: item.type,
+                        breed: item.breed,
+                        age: item.birthMonthYear,
+                        sex: item.sex,
+                        ownerName: item.ownerName,
+                        ownerEmail: item.ownerEmail,
+                        ownerPhone: item.ownerPhone
+                    }
+                };
+            });
+            setPets(options);
+        } catch (error) {
+            console.error("Error al obtener mascotas:", error);
+        } finally {
+            hideLoading();
+        }
     };
 
     return (
@@ -85,12 +103,15 @@ export default function PatientFile(
                     className="p-2 rounded-md border border-primary-dark/30 w-full max-w-xs"
                     value={selectedId}
                     onChange={(e) => {
-                        setSelectedId(e.target.value);
+                        const selectedPet = pets.find(p => p.value === e.target.value);
+                        setSelectedId(e.target.value ?? "");
+                        setSelectedPet(selectedPet.pet ?? undefined);
                         onChange({ patientId: e.target.value });
                     }}
                 >
-                    {mascotas.map(m => (
-                        <option key={m.id} value={m.id}>{m.name}</option>
+                    <option value="">Seleccione una mascota</option>
+                    {pets.map(m => (
+                        <option key={m.value} value={m.value}>{m.label}</option>
                     ))}
                 </select>
                 <Button
@@ -103,11 +124,11 @@ export default function PatientFile(
 
             {/* Información de la mascota */}
             <div className="grid grid-cols-2 gap-4">
-                <Input readOnly name="" label="Nombre" value={selectedMascota?.name || ""} />
-                <Input readOnly name="" label="Especie" value={selectedMascota?.species || ""} />
-                <Input readOnly name="" label="Raza" value={selectedMascota?.breed || ""} />
-                <Input readOnly name="" label="Edad" value={selectedMascota?.age || ""} />
-                <Input readOnly name="" label="Sexo" value={selectedMascota?.sex || ""} />
+                <Input readOnly name="" label="Nombre" value={selectedPet?.name || ""} />
+                <Input readOnly name="" label="Especie" value={selectedPet?.type || ""} />
+                <Input readOnly name="" label="Raza" value={selectedPet?.breed || ""} />
+                <Input readOnly name="" label="Edad" value={selectedPet?.age || ""} />
+                <Input readOnly name="" label="Sexo" value={selectedPet?.sex || ""} />
             </div>
 
             {/* Información del propietario */}
@@ -118,19 +139,23 @@ export default function PatientFile(
                 </p>
             </div>
             <div className="grid grid-cols-2 gap-4">
-                <Input readOnly name="" label="Nombres del Propietario" value={propietarioMock.name} />
-                <Input readOnly name="" label="Apellidos del Propietario" value={propietarioMock.lastName} />
-                <Input readOnly name="" label="Cédula/RUC" value={propietarioMock.identification} />
-                <Input readOnly name="" label="Teléfono" value={propietarioMock.phoneNumber} />
-                <Input readOnly name="" label="Correo electrónico" value={propietarioMock.email} />
+                <Input readOnly name="" label="Propietario" value={selectedPet?.ownerName || ""} />
+                <Input readOnly name="" label="Teléfono" value={selectedPet?.ownerPhone || ""} />
+                <Input readOnly name="" label="Correo electrónico" value={selectedPet?.ownerEmail || ""} />
             </div>
 
             <MyModal isOpen={isModalOpen} onRequestClose={() => setIsModalOpen(false)}>
                 <div className="overflow-y-auto max-h-[90vh]">
                     <PetForm
                         editingId={null}
-                        submited={() => console.log("Datos de mascota:", data)}
-                        clearEditing={() => console.log("Cancelar edición")}
+                        submited={() => {
+                            setIsModalOpen(false);
+                            fetchPets();
+                        }}
+                        clearEditing={() => {
+                            setSelectedId("");
+                            setSelectedPet(undefined);
+                        }}
                         isModalContained={true}
                     />
                 </div>

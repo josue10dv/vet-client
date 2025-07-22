@@ -1,10 +1,19 @@
-import { useState, type JSX } from "react";
+import type { JSX } from "react";
 import TextArea from "../../common/elements/textArea";
+import type { MedicalRecordState } from "../interfaces/medicalRecord";
 
-export default function MedicalHistory(): JSX.Element {
-    const [anamnesis, setAnamnesis] = useState("");
-    const [physicalExam, setPhysicalExam] = useState("");
-    const [diagnosis, setDiagnosis] = useState("");
+/**
+ * Propiedades del componente MedicalHistory.
+ */
+interface MedicalHistoryProps {
+    data: MedicalRecordState["history"];
+    onChange: (updatedFields: Partial<MedicalRecordState["history"]>) => void;
+}
+
+export default function MedicalHistory({
+    data,
+    onChange
+}: MedicalHistoryProps): JSX.Element {
 
     return (
         <section className="w-full text-primary-dark p-6 rounded-xl shadow-sm border border-[var(--neutral-gray020)] bg-white">
@@ -20,9 +29,9 @@ export default function MedicalHistory(): JSX.Element {
                 <TextArea
                     name="anamnesis"
                     label="Anamnesis"
-                    value={anamnesis}
-                    onChange={(e) => setAnamnesis(e.target.value)}
-                    placeholder="Describe los síntomas, antecedentes y motivo de consulta..."
+                    onChange={(e: any) => onChange({ anamnesis: e.target.value })}
+                    placeholder="Ingrese la anamnesis del paciente"
+                    value={data.anamnesis}
                 />
             </div>
 
@@ -31,9 +40,9 @@ export default function MedicalHistory(): JSX.Element {
                 <TextArea
                     name="examen_fisico"
                     label="Examen Físico"
-                    value={physicalExam}
-                    onChange={(e) => setPhysicalExam(e.target.value)}
-                    placeholder="Registra signos vitales, observaciones físicas, etc."
+                    onChange={(e: any) => onChange({ physicalExam: e.target.value })}
+                    placeholder="Ingrese los hallazgos del examen físico"
+                    value={data.physicalExam}
                 />
             </div>
 
@@ -42,9 +51,9 @@ export default function MedicalHistory(): JSX.Element {
                 <TextArea
                     name="diagnostico"
                     label="Diagnóstico"
-                    value={diagnosis}
-                    onChange={(e) => setDiagnosis(e.target.value)}
-                    placeholder="Conclusión clínica basada en los datos recopilados."
+                    onChange={(e: any) => onChange({ diagnosis: e.target.value })}
+                    placeholder="Ingrese el diagnóstico del paciente"
+                    value={data.diagnosis}
                 />
             </div>
         </section>

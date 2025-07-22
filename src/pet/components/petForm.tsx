@@ -274,6 +274,8 @@ export default function PetForm({
                     label="Descripción"
                     {...register("description")}
                     error={errors.description}
+                    placeholder="Ingrese una breve descripción de la mascota"
+                    value={initialValues?.description || ""}
                 />
 
                 {/* Información del propietario */}
