@@ -7,6 +7,7 @@ import Input from "../../common/elements/input";
 import Button from "../../common/elements/button";
 import { axiosInstance } from "../../common/services/requestHandler";
 import ParticleBackground from "../../common/elements/particleBackground";
+import { useSession } from "../../common/context/sessionProvider";
 
 /**
  * Esquema de validación para el formulario de inicio de sesión.
@@ -39,6 +40,8 @@ type LoginFormValues = yup.InferType<typeof loginSchema>;
 export default function LoginPage(): JSX.Element {
     // Estado para manejar el estado de carga del formulario.
     const [isLoading, setIsLoading] = useState(false);
+    // Hook para el control de sesiones
+    const { updateSession } = useSession();
     // Hook de react-hook-form para manejar el formulario.
     const {
         register,
@@ -57,8 +60,9 @@ export default function LoginPage(): JSX.Element {
         try {
             setIsLoading(true);
             const response = await axiosInstance.post("/auth/login", data);
-            const { redirectUrl } = response.data.payload;
+            const { redirectUrl, userSession } = response.data.payload;
             if (redirectUrl) {
+                updateSession(userSession);
                 window.location.href = redirectUrl;
             } else {
                 console.error("No se recibió redirección después del inicio de sesión.");

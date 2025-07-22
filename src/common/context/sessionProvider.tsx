@@ -22,8 +22,9 @@ interface SessionContextProps {
  * Este valor se utiliza cuando no hay sesión activa.
  */
 const defaultSession: SessionData = {
+    userType: "tipo_usuario",
     username: "nombre_usuario",
-    clinic: "veterinaria"
+    userFullName: "nombre_completo_usuario"
 };
 
 /**

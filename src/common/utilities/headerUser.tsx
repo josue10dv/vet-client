@@ -96,12 +96,33 @@ export default function HeaderUser(): JSX.Element {
                         <div className="text-on-secondary font-medium text-right">
                             <div>
                                 <span className="text-sm opacity-80">Veterinaria:</span>
-                                <span className="ml-2 font-semibold">{session?.clinic || 'Veterinaria'}</span>
+                                <span className="ml-2 font-semibold">{session?.veterinaryName || 'Veterinaria'}</span>
                             </div>
                             <div>
                                 <span className="text-sm opacity-80">User:</span>
                                 <span className="ml-2 font-semibold">{session?.username || 'Usuario'}</span>
                             </div>
+                        </div>
+                        <div className="ml-4">
+                            {
+                                session?.userType == "admin"
+                                    ? (
+                                        <>
+                                            <button
+                                                className="bg-gradient-to-r from-[#38322E] to-[#A3978F] text-white text-xs font-medium px-4 py-2 rounded-full shadow-lg hover:from-[#38322E] hover:to-[#38322E] transform hover:scale-105 transition-all duration-200 ease-in-out flex items-center gap-2"
+                                                onClick={() => {
+                                                    window.location.href = "/admin/dashboard";
+                                                }}
+                                            >
+                                                <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
+                                                </svg>
+                                                Dashboard Admin
+                                            </button>
+                                        </>
+                                    )
+                                    : null
+                            }
                         </div>
                     </div>
                 </div>
@@ -140,7 +161,7 @@ export default function HeaderUser(): JSX.Element {
                                 <div className="space-y-2">
                                     <div className="pb-2 border-b border-gray-100">
                                         <div className="text-xs text-gray-500">Veterinaria</div>
-                                        <div className="font-semibold text-sm">{session?.clinic || 'Veterinaria'}</div>
+                                        <div className="font-semibold text-sm">{session?.veterinaryName || 'Veterinaria'}</div>
                                     </div>
                                     <div>
                                         <div className="text-xs text-gray-500">Usuario</div>
@@ -153,6 +174,27 @@ export default function HeaderUser(): JSX.Element {
                                             {session?.username || 'Usuario'}
                                         </div>
                                     </div>
+                                    {
+                                        session?.userType == "admin"
+                                            ? (
+                                                <>
+                                                    <div className="pt-2 border-t border-gray-100">
+                                                        <button
+                                                            className="w-full bg-gradient-to-r from-[#266673] to-[#910856] text-white text-xs font-medium px-3 py-2 rounded-lg shadow-md hover:from-[#19444D] hover:to-[#610539] transform hover:scale-[0.98] transition-all duration-200 ease-in-out flex items-center justify-center gap-2"
+                                                            onClick={() => {
+                                                                window.location.href = "/admin/dashboard";
+                                                            }}
+                                                        >
+                                                            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                                                <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
+                                                            </svg>
+                                                            Dashboard Admin
+                                                        </button>
+                                                    </div>
+                                                </>
+                                            )
+                                            : null
+                                    }
                                 </div>
                             </div>
                         )}

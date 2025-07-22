@@ -1,10 +1,15 @@
 /**
  * Propiedades de la sesión del usuario.
- * Incluye el nombre de usuario y la clínica asociada.
- * - `username`: Nombre de usuario.
- * - `clinic`: Nombre o ID de la clínica asociada al usuario.
+ * Estas propiedades se utilizan para almacenar información del usuario autenticado,
+ * como su nombre de usuario, nombre completo, ID de veterinaria, nombre de veterinaria,
+ * correo electrónico de veterinaria y logo de veterinaria.
  */
 export interface SessionData {
+    userType: string;
     username: string;
-    clinic: string; // o `clinicId`, `clinicName`, etc.
+    userFullName: string;
+    veterinaryId?: string;
+    veterinaryName?: string;
+    veterinaryEmail?: string;
+    veterinaryLogoImg?: string;
 }

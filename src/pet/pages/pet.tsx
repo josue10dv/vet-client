@@ -223,11 +223,17 @@ export default function PetPage(): JSX.Element {
                 isOpen={modalState.isOpen}
                 onRequestClose={closeModal}
             >
-                {modalState.pet && (
-                    <PetDetails
-                        pet={modalState.pet}
-                    />
-                )}
+                {modalState.pet
+                    ? (
+                        <PetDetails
+                            pet={modalState.pet}
+                        />
+                    )
+                    : (
+                        <>
+                            <p>No se encontraron detalles de la mascota.</p>
+                        </>
+                    )}
             </MyModal>
         </>
     );

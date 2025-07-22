@@ -7,6 +7,7 @@ import { axiosInstance } from "../../common/services/requestHandler";
 import type { VeterinaryProps } from "../../common/interfaces/veterinaries";
 import { useLoading } from "../../common/providers/loadingContext";
 import { triggerToast } from "../../common/services/toastHandler";
+import { useSession } from "../../common/context/sessionProvider";
 
 export default function VeterinaryPage(): JSX.Element {
     /**
@@ -20,6 +21,8 @@ export default function VeterinaryPage(): JSX.Element {
     /*************************
      ******** HOOKS **********
      *************************/
+    // Hook para la gestión de la sesión del usuario
+    const { updateSession } = useSession();
     // Estado para controlar el proceso de edicion.
     const [veterinaryForEdition, setVeterinaryForEdition] = useState<VeterinaryForEdition>({
         id: null,
@@ -111,17 +114,19 @@ export default function VeterinaryPage(): JSX.Element {
     const accessVeterinary = async (veterinary: VeterinaryProps) => {
         try {
             showLoading();
+            const veterinaryData = {
+                veterinaryId: veterinary.id ?? '',
+                veterinaryName: veterinary.name ?? '',
+                veterinaryEmail: veterinary.email ?? '',
+                veterinaryLogoImg: veterinary.logoImg ?? ''
+            };
             const response = await axiosInstance.post(`/auth/sign-in-veterinary`,
-                {
-                    veterinaryId: veterinary.id,
-                    veterinaryName: veterinary.name,
-                    veterinaryEmail: veterinary.email,
-                    veterinaryLogoImg: veterinary.logoImg
-                }
+                veterinaryData
             );
             const { success, message } = response.data;
             triggerToast(message, success ? "success" : "error");
             if (success) {
+                updateSession(veterinaryData);
                 window.location.href = "/historias";
             }
         } catch (error) {
