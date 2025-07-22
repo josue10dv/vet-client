@@ -17,12 +17,12 @@ interface VeterinaryListProps {
     onEdit: (id: string) => Promise<void>;
     onDelete?: (id: string) => Promise<void>;
     onView?: (id: string) => void;
-    onAccess?: (id: string) => void;
+    onAccess?: (veterinary: VeterinaryProps) => void;
     getActions?: (veterinary: VeterinaryProps) => {
         onEdit?: (id: string) => Promise<void>;
         onDelete?: (id: string) => Promise<void>;
         onView?: (id: string) => void;
-        onAccess?: (id: string) => void;
+        onAccess?: (veterinary: VeterinaryProps) => void;
     };
 }
 
@@ -90,7 +90,7 @@ export default function VeterinaryList({
                 custom: actions.onAccess ? [
                     {
                         label: "Acceder",
-                        onClick: () => actions.onAccess!(veterinary.id)
+                        onClick: () => actions.onAccess!(veterinary)
                     }
                 ] : undefined
             }

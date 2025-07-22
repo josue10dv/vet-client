@@ -108,9 +108,28 @@ export default function VeterinaryPage(): JSX.Element {
     };
 
     // Accede a la aplicación de una veterinaria específica
-    const accessVeterinary = (id: string) => {
-        console.log(`Acceder a la aplicación de veterinaria ${id}`);
-        // Aquí puedes implementar la lógica para redirigir a la aplicación específica de la veterinaria
+    const accessVeterinary = async (veterinary: VeterinaryProps) => {
+        try {
+            showLoading();
+            const response = await axiosInstance.post(`/auth/sign-in-veterinary`,
+                {
+                    veterinaryId: veterinary.id,
+                    veterinaryName: veterinary.name,
+                    veterinaryEmail: veterinary.email,
+                    veterinaryLogoImg: veterinary.logoImg
+                }
+            );
+            const { success, message } = response.data;
+            triggerToast(message, success ? "success" : "error");
+            if (success) {
+                window.location.href = "/historias";
+            }
+        } catch (error) {
+            console.error("Error al cargar detalles de veterinaria:", error);
+            triggerToast("Error al cargar los detalles de la veterinaria", "error");
+        } finally {
+            hideLoading();
+        }
     };
 
     // Función para limpiar el estado de edición

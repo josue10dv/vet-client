@@ -11,8 +11,15 @@ const events = [
 ];
 
 export default function Appointment(): JSX.Element {
+    /*************************
+     ******** HOOKS **********
+     *************************/
+    // Estado para manejar la apertura del modal y el evento seleccionado.
     const [isModalOpen, setIsModalOpen] = useState(false);
+    // Estado para manejar el evento seleccionado en el calendario.
     const [selectedEvent, setSelectedEvent] = useState<any>(null);
+    // Estado para controla el boton mis citas - todas las citas
+    const [showMyAppointments, setShowMyAppointments] = useState(false);
 
     function handleEventClick(clickInfo: any) {
         setSelectedEvent(clickInfo.event);
@@ -24,17 +31,21 @@ export default function Appointment(): JSX.Element {
             <div className="border-b border-gray-200 p-4 mb-4">
                 <div className="flex justify-between items-center">
                     <div>
-                        <h2 className="text-xl font-semibold text-primary-dark">Lista de Mascotas</h2>
+                        <h2 className="text-xl font-semibold text-primary-dark">Lista de Citas</h2>
                         <p className="text-sm text-primary mt-1">
                             Gestiona los eventos del calendario ({events.length} eventos)
                         </p>
                     </div>
-                    <div>
+                    <div className="flex flex-row items-center gap-2">
+                        <Button
+                            text={showMyAppointments ? "Ver Todas las Citas" : "Mis Citas"}
+                            variant={showMyAppointments ? "secondary" : "tertiary"}
+                            onClick={() => setShowMyAppointments(!showMyAppointments)}
+                        />
                         <Button
                             text="Registrar Cita"
                             variant="primary"
                             onClick={() => setIsModalOpen(true)}
-                            fullWidth={false}
                         />
                     </div>
                 </div>
@@ -44,11 +55,18 @@ export default function Appointment(): JSX.Element {
                 <FullCalendar
                     plugins={[dayGridPlugin]}
                     initialView="dayGridMonth"
-                    weekends={false}
                     events={events}
-                    eventContent={renderEventContent}
                     height="auto"
                     eventClick={handleEventClick}
+                    headerToolbar={{
+                        start: 'title',
+                        center: '',
+                        end: 'today prev,next',
+                    }}
+                    dayMaxEventRows={2}
+                    showNonCurrentDates={false}
+                    dayCellClassNames="!text-sm !text-gray-700"
+                    contentHeight="auto"
                 />
             </div>
 
@@ -61,14 +79,16 @@ export default function Appointment(): JSX.Element {
                 closeButton={false}
             >
                 {selectedEvent ? (
-                    <div className="space-y-4">
-                        <h3 className="text-xl font-bold">Detalle de Cita</h3>
-                        <p><strong>Título:</strong> {selectedEvent.title}</p>
-                        <p><strong>Fecha:</strong> {selectedEvent.start?.toLocaleDateString()}</p>
-                        {selectedEvent.extendedProps?.description && (
-                            <p><strong>Descripción:</strong> {selectedEvent.extendedProps.description}</p>
-                        )}
-                        <div className="flex justify-end">
+                    <div className="space-y-3">
+                        <h3 className="text-lg font-semibold text-primary-dark">Detalle de la Cita</h3>
+                        <div className="text-sm space-y-1">
+                            <p><strong>Motivo:</strong> {selectedEvent.timeText}</p>
+                            <p><strong>Fecha:</strong> {selectedEvent.start?.toLocaleDateString()}</p>
+                            {selectedEvent.extendedProps?.description && (
+                                <p><strong>Descripción:</strong> {selectedEvent.extendedProps.description}</p>
+                            )}
+                        </div>
+                        <div className="flex justify-end pt-3">
                             <Button
                                 variant="error"
                                 text="Cerrar"
@@ -76,24 +96,19 @@ export default function Appointment(): JSX.Element {
                                     setIsModalOpen(false);
                                     setSelectedEvent(null);
                                 }}
-                                fullWidth={false}
                             />
                         </div>
                     </div>
                 ) : (
-                    <NewEventForm close={() => setIsModalOpen(false)} />
+                    <NewEventForm
+                        closeModal={() => setIsModalOpen(false)}
+                        clearEditing={() => setSelectedEvent(null)}
+                        initialValues={null}
+                        editingId={null}
+                    />
                 )}
             </MyModal>
 
         </section>
-    );
-}
-
-function renderEventContent(eventInfo: any) {
-    return (
-        <>
-            <b className="mr-1">{eventInfo.timeText}</b>
-            <i>{eventInfo.event.title}</i>
-        </>
     );
 }

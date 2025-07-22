@@ -1,5 +1,5 @@
 import ReactModal from 'react-modal';
-import { type JSX, type ReactNode } from 'react';
+import { type JSX } from 'react';
 
 /**
  * Propiedades del componente MyModal.
@@ -10,7 +10,7 @@ import { type JSX, type ReactNode } from 'react';
 interface MyModalProps {
     isOpen: boolean;
     onRequestClose: () => void;
-    children: ReactNode;
+    children: JSX.Element;
     closeButton?: boolean;
 }
 
