@@ -54,42 +54,6 @@ export default function PetPage(): JSX.Element {
             setPets(response.data.payload.items || []);
         } catch (error) {
             console.error("Error al obtener mascotas:", error);
-            // Datos mock en caso de error
-            const mockPets: Pet[] = [
-                {
-                    id: "1",
-                    name: "Max",
-                    species: "dog",
-                    breed: "Labrador",
-                    age: "3",
-                    sex: "male"
-                },
-                {
-                    id: "2",
-                    name: "Luna",
-                    species: "cat",
-                    breed: "Persa",
-                    age: "2",
-                    sex: "female"
-                },
-                {
-                    id: "3",
-                    name: "Rocky",
-                    species: "dog",
-                    breed: "Pastor Alemán",
-                    age: "5",
-                    sex: "male"
-                },
-                {
-                    id: "4",
-                    name: "Mimi",
-                    species: "cat",
-                    breed: "Siamés",
-                    age: "1",
-                    sex: "female"
-                }
-            ];
-            setPets(mockPets);
         } finally {
             hideLoading();
         }
@@ -106,14 +70,6 @@ export default function PetPage(): JSX.Element {
             });
         } catch (error) {
             console.error("Error al cargar mascota:", error);
-            // Usar datos mock para la edición
-            const pet = pets.find(p => p.id === id);
-            if (pet) {
-                setPetForEdition({
-                    id: pet.id,
-                    initValues: pet
-                });
-            }
         } finally {
             hideLoading();
         }

@@ -180,7 +180,7 @@ export default function HeaderUser(): JSX.Element {
                                                 <>
                                                     <div className="pt-2 border-t border-gray-100">
                                                         <button
-                                                            className="w-full bg-gradient-to-r from-[#266673] to-[#910856] text-white text-xs font-medium px-3 py-2 rounded-lg shadow-md hover:from-[#19444D] hover:to-[#610539] transform hover:scale-[0.98] transition-all duration-200 ease-in-out flex items-center justify-center gap-2"
+                                                            className="w-full bg-gradient-to-r from-[#38322E] to-[#A3978F] text-white text-xs font-medium px-3 py-2 rounded-lg shadow-md hover:from-[#38322E] hover:to-[#38322E] transform hover:scale-[0.98] transition-all duration-200 ease-in-out flex items-center justify-center gap-2"
                                                             onClick={() => {
                                                                 window.location.href = "/admin/dashboard";
                                                             }}
