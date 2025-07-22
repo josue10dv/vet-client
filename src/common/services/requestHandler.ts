@@ -1,5 +1,5 @@
 import axios, { AxiosError, type AxiosInstance } from "axios";
-import { EnvHandler } from "./envHandler";
+// import { EnvHandler } from "./envHandler";
 import { triggerToast } from "./toastHandler";
 
 /**
@@ -12,9 +12,9 @@ export class RequestHandler {
     private axiosInstance: AxiosInstance;
 
     private constructor() {
-        const env = EnvHandler.getInstance();
+        // const env = EnvHandler.getInstance();
         this.axiosInstance = axios.create({
-            baseURL: env.getBackendUrl(),
+            baseURL: 'https://api.forpetsapp.me',
             timeout: 10000,
             withCredentials: true,
         });
